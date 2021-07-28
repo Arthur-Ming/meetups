@@ -9,9 +9,21 @@
       <router-link v-if="showReturnToMeetups" :to="{ name: 'meetups' }">
         &larr; Вернуться к списку
       </router-link>
+      <router-link
+        :to="{ name: 'meetups', query: { participation: 'attending' } }"
+      >
+        Мои митапы
+      </router-link>
+
+      <router-link
+        :to="{ name: 'meetups', query: { participation: 'organizing' } }"
+      >
+        Организуемые митапы
+      </router-link>
       <router-link :to="{ name: 'login' }">Вход</router-link>
       <router-link :to="{ name: 'register' }">Регистрация</router-link>
-      <router-link :to="{ name: 'meetups' }">Создать митап</router-link>
+      <router-link :to="{ name: 'meetups_create' }">Создать митап</router-link>
+      <router-link to="#">Выйти</router-link>
 
       <!--  <router-link :to="{ name: 'meetups' }">Митапы</router-link>
       <router-link :to="{ name: 'form' }">Создать митап</router-link>

@@ -2,7 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 
 
-import FormPage from '../views/FormPage';
+
 
 Vue.use(VueRouter);
 
@@ -58,10 +58,14 @@ export const router = new VueRouter({
       component: () => import('../views/LoginPage'),
     },
     {
-      path: '/form',
-      name: 'form',
-      component: FormPage,
+      path: '/meetups/create',
+      name: 'meetups_create',
+      component: () => import('../views/FormPage'),
     },
+    {
+      path: '*',
+      component: () => import('../views/NotFoundPage')
+    }
 
   ],
 });
