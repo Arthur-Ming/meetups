@@ -46,7 +46,7 @@ export default {
 
     $route: {
       handler() {
-        console.log(this.$route);
+       
         const { view, date, participation, search } = this.$route.query;
 
         this.params = {

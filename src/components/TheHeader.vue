@@ -20,14 +20,10 @@
       >
         Организуемые митапы
       </router-link>
+      <router-link :to="{ name: 'meetups_create' }">Создать митап</router-link>
       <router-link :to="{ name: 'login' }">Вход</router-link>
       <router-link :to="{ name: 'register' }">Регистрация</router-link>
-      <router-link :to="{ name: 'meetups_create' }">Создать митап</router-link>
       <router-link to="#">Выйти</router-link>
-
-      <!--  <router-link :to="{ name: 'meetups' }">Митапы</router-link>
-      <router-link :to="{ name: 'form' }">Создать митап</router-link>
-      <router-link :to="{ name: 'login' }">Вход</router-link> -->
     </nav>
   </header>
 </template>

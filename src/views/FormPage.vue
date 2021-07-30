@@ -2,7 +2,7 @@
   <form-layout title="Создать митап">
     <meetup-form
       :meetup="meetup"
-      submit-text="Сабмит"
+      submit-text="Создать"
       @submit="handleSubmit"
       @cancel="handleCancel"
     />
@@ -23,7 +23,7 @@ export default {
         title: "",
         description: "",
         imageId: null,
-        date: "2021-02-03",
+        date: new Date(),
         place: "",
         agenda: [],
       },
@@ -36,7 +36,7 @@ export default {
     },
 
     handleCancel() {
-      alert("Cancel");
+      this.$router.push({ name: "index" });
     },
   },
 };

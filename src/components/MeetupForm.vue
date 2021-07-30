@@ -41,22 +41,10 @@
 
     <div class="meetup-form__aside">
       <div class="meetup-form__aside_stick">
-        <!-- data-test атрибуты используются для поиска нужного элемента в тестах, не удаляйте их -->
-        <button
-          class="button button_secondary button_block"
-          type="button"
-          data-test="cancel"
-          @click="$emit('cancel')"
-        >
+        <secondary-button @click="$emit('cancel')" block>
           Отмена
-        </button>
-        <button
-          class="button button_primary button_block"
-          type="submit"
-          data-test="submit"
-        >
-          {{ submitText }}
-        </button>
+        </secondary-button>
+        <primary-button type="submit" block> {{ submitText }}</primary-button>
       </div>
     </div>
   </form>
@@ -67,6 +55,8 @@ import MeetupAgendaItemForm from "./MeetupAgendaItemForm.vue";
 import FormGroup from "./FormGroup.vue";
 import AppInput from "./AppInput.vue";
 import ImageUploader from "./ImageUploader";
+import PrimaryButton from "../components/PrimaryButton";
+import SecondaryButton from "../components/SecondaryButton";
 import DateInput from "./DateInput";
 
 const _ = require("lodash");
@@ -94,6 +84,8 @@ export default {
     FormGroup,
     AppInput,
     DateInput,
+    PrimaryButton,
+    SecondaryButton,
   },
 
   props: {
@@ -109,10 +101,11 @@ export default {
 
   data() {
     return {
-      localMeetup: {
+      /*  localMeetup: {
         ..._.cloneDeep(this.meetup),
         agenda: [createAgendaItem()],
-      },
+      }, */
+      localMeetup: _.cloneDeep(this.meetup),
     };
   },
 
@@ -124,6 +117,8 @@ export default {
         newItem = {
           ...createAgendaItem(),
           startsAt:
+            this.localMeetup.agenda[this.localMeetup.agenda.length - 1].endsAt,
+          endsAt:
             this.localMeetup.agenda[this.localMeetup.agenda.length - 1].endsAt,
         };
       } else newItem = createAgendaItem();
@@ -146,35 +141,4 @@ export default {
 </script>
 
 <style scoped>
-.meetup-form__aside {
-  margin: 48px 0;
-}
-
-.meetup-form__aside_stick > .button {
-  margin: 0 0 12px 0;
-}
-
-@media all and (min-width: 992px) {
-  .meetup-form {
-    display: flex;
-    flex-direction: row;
-  }
-
-  .meetup-form__content {
-    flex: 1 0 calc(100% - 320px);
-  }
-
-  .meetup-form__aside {
-    flex: 1 0 320px;
-    max-width: 320px;
-    width: 100%;
-    padding-left: 137px;
-    margin: 0;
-  }
-
-  .meetup-form__aside_stick {
-    position: sticky;
-    top: 32px;
-  }
-}
 </style>

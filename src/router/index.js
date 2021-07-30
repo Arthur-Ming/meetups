@@ -8,7 +8,7 @@ Vue.use(VueRouter);
 
 export const router = new VueRouter({
   mode: 'history',
-  base: '/',
+  base: process.env.BASE_URL,
   routes: [
     {
       path: '/',
@@ -61,6 +61,12 @@ export const router = new VueRouter({
       path: '/meetups/create',
       name: 'meetups_create',
       component: () => import('../views/FormPage'),
+    },
+    {
+      path: "/meetups/:meetupId(\\d+)/edit",
+      name: "meetup-edit",
+      props: true,
+      component: () => import('../views/FormEditPage'),
     },
     {
       path: '*',

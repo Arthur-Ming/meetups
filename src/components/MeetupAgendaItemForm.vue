@@ -6,7 +6,13 @@
 
     <form-group>
       <select v-model="localAgendaItem.type" class="form-control" title="Тип">
-        <option v-for="(item, index) in agendaItemTypes" :key="index" :value="item.value">{{ item.text }}</option>
+        <option
+          v-for="(item, index) in agendaItemTypes"
+          :key="index"
+          :value="item.value"
+        >
+          {{ item.text }}
+        </option>
       </select>
     </form-group>
 
@@ -48,7 +54,11 @@
 
       <form-group label="Язык">
         <select v-model="localAgendaItem.language" class="form-control">
-          <option v-for="(language, index) in talkLanguages" :key="index" :value="language.value">
+          <option
+            v-for="(language, index) in talkLanguages"
+            :key="index"
+            :value="language.value"
+          >
             {{ language.text }}
           </option>
         </select>
@@ -64,30 +74,30 @@
 </template>
 
 <script>
-import AppIcon from './AppIcon';
-import FormGroup from './FormGroup.vue';
-import AppInput from './AppInput.vue';
-import DateInput from './DateInput';
+import AppIcon from "./AppIcon";
+import FormGroup from "./FormGroup.vue";
+import AppInput from "./AppInput.vue";
+import DateInput from "./DateInput";
 
 const getAgendaItemTypes = () => [
-  { value: 'registration', text: 'Регистрация' },
-  { value: 'opening', text: 'Открытие' },
-  { value: 'break', text: 'Перерыв' },
-  { value: 'coffee', text: 'Coffee Break' },
-  { value: 'closing', text: 'Закрытие' },
-  { value: 'afterparty', text: 'Afterparty' },
-  { value: 'talk', text: 'Доклад' },
-  { value: 'other', text: 'Другое' },
+  { value: "registration", text: "Регистрация" },
+  { value: "opening", text: "Открытие" },
+  { value: "break", text: "Перерыв" },
+  { value: "coffee", text: "Coffee Break" },
+  { value: "closing", text: "Закрытие" },
+  { value: "afterparty", text: "Afterparty" },
+  { value: "talk", text: "Доклад" },
+  { value: "other", text: "Другое" },
 ];
 
 const getTalkLanguages = () => [
-  { value: null, text: 'Не указано' },
-  { value: 'RU', text: 'RU' },
-  { value: 'EN', text: 'EN' },
+  { value: null, text: "Не указано" },
+  { value: "RU", text: "RU" },
+  { value: "EN", text: "EN" },
 ];
 
 export default {
-  name: 'MeetupAgendaItemForm',
+  name: "MeetupAgendaItemForm",
 
   components: { AppIcon, FormGroup, AppInput, DateInput },
   props: {
@@ -118,19 +128,17 @@ export default {
       set(newVal) {
         this.localAgendaItem.startsAt = newVal;
 
-        //if (this.durationOfAgenda == 0) return;
-
-        let startsAtHH = +this.localAgendaItem.startsAt.split(':')[0];
-        let startsAtMM = this.localAgendaItem.startsAt.split(':')[1];
+        let startsAtHH = +this.localAgendaItem.startsAt.split(":")[0];
+        let startsAtMM = this.localAgendaItem.startsAt.split(":")[1];
 
         let endsAtHH = startsAtHH + this.durationOfAgenda;
 
         if (endsAtHH > 23) endsAtHH = endsAtHH - 24;
 
         if (endsAtHH < 10) {
-          this.localAgendaItem.endsAt = '0' + endsAtHH + ':' + startsAtMM;
+          this.localAgendaItem.endsAt = "0" + endsAtHH + ":" + startsAtMM;
         } else {
-          this.localAgendaItem.endsAt = endsAtHH + ':' + startsAtMM;
+          this.localAgendaItem.endsAt = endsAtHH + ":" + startsAtMM;
         }
       },
     },
@@ -151,19 +159,15 @@ export default {
     localAgendaItem: {
       deep: true,
       handler(newVal) {
-        this.$emit('update:agendaItem', { ...newVal });
+        this.$emit("update:agendaItem", { ...newVal });
       },
     },
   },
 
-  created: function () {
-    this.durationOfAgenda = this.setDurationOfAgenda();
-  },
-
   methods: {
     setDurationOfAgenda() {
-      let startsAtHH = +this.localAgendaItem.startsAt.split(':')[0];
-      let endsAtHH = +this.localAgendaItem.endsAt.split(':')[0];
+      let startsAtHH = +this.localAgendaItem.startsAt.split(":")[0];
+      let endsAtHH = +this.localAgendaItem.endsAt.split(":")[0];
 
       if (endsAtHH >= startsAtHH) {
         return endsAtHH - startsAtHH;

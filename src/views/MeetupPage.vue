@@ -14,7 +14,18 @@
               :organizer="meetup.organizer"
               :place="meetup.place"
               :date="meetupDate"
-            ></meetup-info>
+            />
+            <div class="meetup__aside-buttons">
+              <primary-button block>Участвовать</primary-button>
+              <primary-button
+                tag="router-link"
+                :to="{ name: 'meetup-edit', params: { meetup } }"
+                block
+              >
+                Редактировать
+              </primary-button>
+              <danger-button block>Удалить</danger-button>
+            </div>
           </div>
         </div>
       </div>
@@ -27,8 +38,11 @@
 
 <script>
 import ContentTabs from "../components/ContentTabs";
+import DangerButton from "../components/DangerButton.vue";
 import MeetupCover from "../components/MeetupCover";
 import MeetupInfo from "../components/MeetupInfo";
+import PrimaryButton from "../components/PrimaryButton";
+
 import { fetchMeetup, getMeetupCoverLink } from "../data";
 
 export default {
@@ -38,14 +52,21 @@ export default {
     ContentTabs,
     MeetupCover,
     MeetupInfo,
+    PrimaryButton,
+
+    DangerButton,
   },
 
   beforeRouteEnter(to, from, next) {
-    fetchMeetup(to.params.meetupId).then((meetup) => {
-      next((vm) => {
-        vm.setMeetup(meetup);
+    fetchMeetup(to.params.meetupId)
+      .then((meetup) => {
+        next((vm) => {
+          vm.setMeetup(meetup);
+        });
+      })
+      .catch(() => {
+        next("/meetups");
       });
-    });
   },
 
   beforeRouteUpdate(to, from, next) {
