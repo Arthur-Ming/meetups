@@ -8,28 +8,33 @@
     >
       <span>{{ title }}</span>
 
-      <input ref="input" type="file" accept="image/*" class="form-control-file" @change="uploadImage($event)" />
+      <input
+        ref="input"
+        type="file"
+        accept="image/*"
+        class="form-control-file"
+        @change="uploadImage($event)"
+      />
     </label>
   </div>
 </template>
 
 <script>
-import { ImageService } from '../ImageService';
+import { ImageService } from "../ImageService";
 
-const LOADING_TEXT = 'Загрузка...';
-const EMPTY_TEXT = 'Загрузить изображение';
-const DELETE_TEXT = 'Удалить изображение';
+const LOADING_TEXT = "Загрузка...";
+const EMPTY_TEXT = "Загрузить изображение";
+const DELETE_TEXT = "Удалить изображение";
 
 export default {
-  name: 'ImageUploader',
+  name: "ImageUploader",
 
   model: {
-    prop: 'value', //imageId
-    event: 'change',
+    prop: "value",
+    event: "change",
   },
 
   props: {
-    //imageId
     value: {
       default: null,
     },
@@ -49,7 +54,9 @@ export default {
     },
 
     cover() {
-      return this.value ? `--bg-image: url('${ImageService.getImageURL(this.value)}')` : '';
+      return this.value
+        ? `--bg-image: url('${ImageService.getImageURL(this.value)}')`
+        : "";
     },
   },
 
@@ -57,7 +64,7 @@ export default {
     removeImage(e) {
       if (this.value) {
         e.preventDefault();
-        this.$emit('change', null);
+        this.$emit("change", null);
         this.$refs.input.value = null;
       }
     },
@@ -65,8 +72,8 @@ export default {
     async uploadImage(e) {
       this.isLoading = true;
 
-      await ImageService.uploadImage(e.target.files['0']).then((res) => {
-        this.$emit('change', res['id']);
+      await ImageService.uploadImage(e.target.files["0"]).then((res) => {
+        this.$emit("change", res["id"]);
       });
 
       this.isLoading = false;
@@ -85,7 +92,12 @@ export default {
   --bg-image: var(--default-cover);
   background-size: cover;
   background-position: center;
-  background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), var(--bg-image);
+  background-image: linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.4),
+      rgba(0, 0, 0, 0.4)
+    ),
+    var(--bg-image);
   border: 2px solid var(--blue-light);
   border-radius: 8px;
   transition: 0.2s border-color;
@@ -100,7 +112,7 @@ export default {
 
 .image-uploader .image-uploader__preview > span {
   color: var(--white);
-  font-family: 'Nunito', sans-serif;
+  font-family: "Nunito", sans-serif;
   font-weight: 600;
   font-size: 20px;
   line-height: 28px;

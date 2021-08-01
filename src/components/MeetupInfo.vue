@@ -50,3 +50,28 @@ export default {
   },
 };
 </script>
+<style scoped>
+.info-list {
+  margin: 0;
+  padding: 0;
+}
+
+.info-list li {
+  list-style-type: none;
+  position: relative;
+  padding-left: 36px;
+  font-size: 18px;
+  line-height: 28px;
+  margin: 0 0 8px;
+}
+
+.info-list li:last-child {
+  margin: 0;
+}
+
+.info-list__icon {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+</style>

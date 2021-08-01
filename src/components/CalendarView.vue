@@ -1,12 +1,21 @@
 <template>
-  <renderless-calendar v-slot="{ calendar, currentDate, monthDown, monthUp }" v-bind="$attrs">
+  <renderless-calendar
+    v-slot="{ calendar, currentDate, monthDown, monthUp }"
+    v-bind="$attrs"
+  >
     <div class="rangepicker">
       <div class="rangepicker__calendar">
         <div class="rangepicker__month-indicator">
           <div class="rangepicker__selector-controls">
-            <button class="rangepicker__selector-control-left" @click="monthDown"></button>
+            <button
+              class="rangepicker__selector-control-left"
+              @click="monthDown"
+            ></button>
             <div>{{ currentDate }}</div>
-            <button class="rangepicker__selector-control-right" @click="monthUp"></button>
+            <button
+              class="rangepicker__selector-control-right"
+              @click="monthUp"
+            ></button>
           </div>
         </div>
         <div class="rangepicker__date-grid">
@@ -26,10 +35,10 @@
 </template>
 
 <script>
-import RenderlessCalendar from './RenderlessCalendar';
+import RenderlessCalendar from "./RenderlessCalendar";
 
 export default {
-  name: 'CalendarView',
+  name: "CalendarView",
   components: { RenderlessCalendar },
   inheritAttrs: false,
 };
@@ -88,7 +97,7 @@ export default {
   justify-content: center;
   cursor: pointer;
   transition: 0.3s all;
-  background: url('~@/assets/icons/icon-pill-active.svg') left center no-repeat;
+  background: url("../assets/icons/icon-pill-active.svg") left center no-repeat;
   background-size: cover;
 }
 

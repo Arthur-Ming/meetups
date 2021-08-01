@@ -1,5 +1,5 @@
 <template>
-  <form-layout title="Создать митап">
+  <form-layout title="Создание митапа">
     <meetup-form
       v-if="meetup"
       :meetup="meetup"
@@ -14,6 +14,7 @@
 import FormLayout from "../components/FormLayout";
 import MeetupForm from "../components/MeetupForm";
 import { fetchMeetup } from "../data";
+import { meetupsApi } from "@/api/meetupsApi";
 export default {
   name: "FormEditPage",
   components: { FormLayout, MeetupForm },
@@ -48,6 +49,9 @@ export default {
   },
   methods: {
     handleSubmit(meetup) {
+      console.log("handleSubmit");
+
+      meetupsApi.createMeetup(meetup);
       this.meetup = meetup;
     },
 

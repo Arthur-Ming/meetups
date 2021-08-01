@@ -24,3 +24,8 @@ export default {
   },
 };
 </script>
+<style scoped>
+.meetup-agenda {
+  margin: 0;
+}
+</style>

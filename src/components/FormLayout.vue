@@ -9,8 +9,8 @@
 
 <script>
 export default {
-  name: 'FormLayout',
-  props: ['title'],
+  name: "FormLayout",
+  props: ["title"],
 };
 </script>
 

@@ -5,15 +5,11 @@
     </button>
 
     <form-group>
-      <select v-model="localAgendaItem.type" class="form-control" title="Тип">
-        <option
-          v-for="(item, index) in agendaItemTypes"
-          :key="index"
-          :value="item.value"
-        >
-          {{ item.text }}
-        </option>
-      </select>
+      <dropdown-button
+        v-model="localAgendaItem.type"
+        title="Тип"
+        :options="$options.agendaItemTypeOptions"
+      />
     </form-group>
 
     <div class="form__row">
@@ -29,77 +25,42 @@
       </div>
     </div>
 
-    <template v-if="localAgendaItem.type == 'other'">
-      <form-group label="Заголовок">
-        <app-input v-model="localAgendaItem.title" />
-      </form-group>
-
-      <form-group label="Описание">
-        <app-input v-model="localAgendaItem.description" multiline rows="3" />
-      </form-group>
-    </template>
-
-    <template v-else-if="localAgendaItem.type == 'talk'">
-      <form-group label="Тема">
-        <app-input v-model="localAgendaItem.title" />
-      </form-group>
-
-      <form-group label="Докладчик">
-        <app-input v-model="localAgendaItem.speaker" />
-      </form-group>
-
-      <form-group label="Описание">
-        <app-input v-model="localAgendaItem.description" multiline rows="3" />
-      </form-group>
-
-      <form-group label="Язык">
-        <select v-model="localAgendaItem.language" class="form-control">
-          <option
-            v-for="(language, index) in talkLanguages"
-            :key="index"
-            :value="language.value"
-          >
-            {{ language.text }}
-          </option>
-        </select>
-      </form-group>
-    </template>
-
-    <template v-else>
-      <form-group label="Нестандартный текст (необязательно)">
-        <app-input />
-      </form-group>
-    </template>
+    <form-group
+      v-for="(item, index) in $options.fieldSpecifications[
+        localAgendaItem.type
+      ]"
+      :key="index"
+      :label="item.title"
+    >
+      <component
+        :is="item.component"
+        v-bind="item.props"
+        :[item.model.prop]="localAgendaItem[item.field]"
+        @[item.model.event]="localAgendaItem[item.field] = $event"
+      />
+    </form-group>
   </div>
 </template>
 
 <script>
+import AppInput from "./AppInput";
+import DropdownButton from "./DropdownButton";
 import AppIcon from "./AppIcon";
-import FormGroup from "./FormGroup.vue";
-import AppInput from "./AppInput.vue";
+import FormGroup from "./FormGroup";
 import DateInput from "./DateInput";
-
-const getAgendaItemTypes = () => [
-  { value: "registration", text: "Регистрация" },
-  { value: "opening", text: "Открытие" },
-  { value: "break", text: "Перерыв" },
-  { value: "coffee", text: "Coffee Break" },
-  { value: "closing", text: "Закрытие" },
-  { value: "afterparty", text: "Afterparty" },
-  { value: "talk", text: "Доклад" },
-  { value: "other", text: "Другое" },
-];
-
-const getTalkLanguages = () => [
-  { value: null, text: "Не указано" },
-  { value: "RU", text: "RU" },
-  { value: "EN", text: "EN" },
-];
+import {
+  getAgendaItemsFieldSpecifications,
+  getAgendaItemTypeOptions,
+} from "../MeetupService";
 
 export default {
   name: "MeetupAgendaItemForm",
 
-  components: { AppIcon, FormGroup, AppInput, DateInput },
+  components: { FormGroup, AppIcon, AppInput, DropdownButton, DateInput },
+
+  agendaItemTypeOptions: getAgendaItemTypeOptions(),
+  fieldSpecifications: getAgendaItemsFieldSpecifications(),
+
   props: {
     agendaItem: {
       required: true,
@@ -109,8 +70,6 @@ export default {
 
   data() {
     return {
-      agendaItemTypes: getAgendaItemTypes(),
-      talkLanguages: getTalkLanguages(),
       localAgendaItem: {
         ...this.agendaItem,
       },
@@ -162,6 +121,10 @@ export default {
         this.$emit("update:agendaItem", { ...newVal });
       },
     },
+  },
+
+  created: function () {
+    this.durationOfAgenda = this.setDurationOfAgenda();
   },
 
   methods: {

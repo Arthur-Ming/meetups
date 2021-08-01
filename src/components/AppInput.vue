@@ -24,11 +24,11 @@
 
 <script>
 export default {
-  name: 'AppInput',
+  name: "AppInput",
   inheritAttrs: false,
   model: {
-    prop: 'value',
-    event: 'input',
+    prop: "value",
+    event: "input",
   },
 
   props: {
@@ -61,14 +61,14 @@ export default {
 
   computed: {
     tag() {
-      return this.multiline ? 'textarea' : 'input';
+      return this.multiline ? "textarea" : "input";
     },
 
     listeners() {
       return {
         ...this.$listeners,
-        input: ($event) => this.$emit('input', $event.target.value),
-        change: ($event) => this.$emit('change', $event.target.value),
+        input: ($event) => this.$emit("input", $event.target.value),
+        change: ($event) => this.$emit("change", $event.target.value),
       };
     },
   },
@@ -83,8 +83,8 @@ export default {
 
   methods: {
     updateHasIcon() {
-      this.hasIcon.left = !!this.$slots['left-icon'];
-      this.hasIcon.right = !!this.$slots['right-icon'];
+      this.hasIcon.left = !!this.$slots["left-icon"];
+      this.hasIcon.right = !!this.$slots["right-icon"];
     },
   },
 };
@@ -96,7 +96,7 @@ export default {
   height: 52px;
   border-radius: 8px;
   border: 2px solid var(--blue-light);
-  font-family: 'Nunito', sans-serif;
+  font-family: "Nunito", sans-serif;
   font-weight: 600;
   font-size: 20px;
   line-height: 28px;

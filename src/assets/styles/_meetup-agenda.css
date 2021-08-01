@@ -44,7 +44,7 @@
 }
 
 .meetup-agenda__dot::before {
-  content: '•';
+  content: "•";
   color: var(--grey);
   padding: 0 1ch;
 }

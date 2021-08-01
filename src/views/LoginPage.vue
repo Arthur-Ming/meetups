@@ -35,7 +35,8 @@
 import FormGroup from "../components/FormGroup";
 import AppInput from "../components/AppInput";
 import PrimaryButton from "../components/PrimaryButton";
-import { login } from "../data";
+import { authApi } from "@/api/authApi";
+//import { login } from "../data";
 
 export default {
   name: "LoginPage",
@@ -64,7 +65,21 @@ export default {
         return;
       }
 
-      login(this.user.email, this.user.password).then((res) => {
+      authApi
+        .login(this.user.email, this.user.password)
+        .then((res) => {
+          alert(res.fullname);
+          if (this.$route.query.from !== undefined) {
+            this.$router.push(this.$route.query.from);
+          } else {
+            this.$router.push({ name: "index" });
+          }
+        })
+        .catch(() => {
+          console.log("!!!!");
+        });
+
+      /*  authApi.login(this.user.email, this.user.password).then((res) => {
         if (res.fullname !== undefined) {
           alert(res.fullname);
           if (this.$route.query.from !== undefined) {
@@ -73,10 +88,17 @@ export default {
             this.$router.push("/");
           }
         } else alert(res.message);
-      });
+      }); */
     },
   },
 };
 </script>
+
 <style scoped>
+.page.page_onboarding {
+  max-width: 374px;
+  width: 100%;
+  margin: 0 auto;
+}
 </style>
+

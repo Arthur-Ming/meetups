@@ -42,8 +42,8 @@ import DangerButton from "../components/DangerButton.vue";
 import MeetupCover from "../components/MeetupCover";
 import MeetupInfo from "../components/MeetupInfo";
 import PrimaryButton from "../components/PrimaryButton";
-
-import { fetchMeetup, getMeetupCoverLink } from "../data";
+import { meetupsApi } from "@/api/meetupsApi";
+import { getMeetupCoverLink } from "../data";
 
 export default {
   name: "MeetupPage",
@@ -58,7 +58,8 @@ export default {
   },
 
   beforeRouteEnter(to, from, next) {
-    fetchMeetup(to.params.meetupId)
+    meetupsApi
+      .fetchMeetup(to.params.meetupId)
       .then((meetup) => {
         next((vm) => {
           vm.setMeetup(meetup);
@@ -73,7 +74,7 @@ export default {
     if (to.params.meetupId === from.params.meetupId) {
       next();
     } else {
-      fetchMeetup(to.params.meetupId).then((meetup) => {
+      meetupsApi.fetchMeetup(to.params.meetupId).then((meetup) => {
         this.setMeetup(meetup);
         next();
       });
@@ -111,4 +112,53 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.meetup {
+  display: flex;
+  flex-direction: column;
+  margin: 48px 0 0;
+}
+
+.meetup-description {
+  padding-top: 33px;
+}
+
+.meetup__content p {
+  margin-bottom: 24px;
+  font-size: 18px;
+  line-height: 28px;
+}
+
+.meetup__aside {
+  margin: 40px 0;
+}
+
+.meetup__aside-buttons {
+  padding: 0 0 0 34px;
+  margin-top: 16px;
+}
+
+.meetup__aside-buttons > .button {
+  margin: 0 10px 10px 0;
+}
+
+@media all and (min-width: 992px) {
+  .meetup {
+    flex-direction: row;
+  }
+
+  .meetup__content {
+    flex: 1 0 calc(100% - 350px);
+  }
+
+  .meetup__aside {
+    flex: 1 0 350px;
+    padding: 50px 0 0 44px;
+    margin: 0;
+  }
+
+  .meetup__empty {
+    height: 340px;
+  }
+}
+</style>

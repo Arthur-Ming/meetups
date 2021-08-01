@@ -12,6 +12,7 @@
 <script>
 import FormLayout from "../components/FormLayout";
 import MeetupForm from "../components/MeetupForm";
+import { meetupsApi } from "@/api/meetupsApi";
 export default {
   name: "FormPage",
   components: { FormLayout, MeetupForm },
@@ -32,7 +33,9 @@ export default {
 
   methods: {
     handleSubmit(meetup) {
+      console.log("handleSubmit");
       this.meetup = meetup;
+      meetupsApi.createMeetup(meetup);
     },
 
     handleCancel() {

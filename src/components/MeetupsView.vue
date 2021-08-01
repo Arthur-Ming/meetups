@@ -42,7 +42,8 @@
 </template>
 
 <script>
-import { fetchMeetups } from "../data";
+//import { fetchMeetups } from "../data";
+import { meetupsApi } from "../api/meetupsApi";
 import MeetupsList from "../components/MeetupsList";
 import MeetupsCalendar from "../components/MeetupsCalendar";
 import PageTabs from "../components/PageTabs";
@@ -145,17 +146,6 @@ export default {
           .join(" ")
           .toLowerCase()
           .includes(this.filter.search.toLowerCase());
-      console.log(this.rawMeetups);
-      /*  console.log(
-        this.meetups
-          .filter(
-            (meetup) =>
-              dateFilter(meetup) &&
-              participationFilter(meetup) &&
-              searchFilter(meetup)
-          )
-          .sort(({ date: a }, { date: b }) => b - a)
-      ); */
 
       return this.meetups
         .filter(
@@ -166,6 +156,7 @@ export default {
         )
         .sort((a, b) => b.date - a.date);
     },
+
     viewComponent() {
       return this.currentView === "list" ? MeetupsList : MeetupsCalendar;
     },
@@ -177,7 +168,7 @@ export default {
 
   methods: {
     async fetchMeetups() {
-      this.rawMeetups = await fetchMeetups();
+      this.rawMeetups = await meetupsApi.fetchMeetups();
     },
   },
 };
@@ -186,5 +177,51 @@ export default {
 <style scoped>
 fieldset {
   padding: 1rem;
+}
+.meetup__empty {
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  line-height: 28px;
+  color: var(--blue-2);
+  border: 2px solid var(--blue-light);
+  border-radius: 8px;
+  margin: 32px 0;
+}
+
+.filters-panel {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 40px 0 32px 0;
+}
+
+.filters-panel__col {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+@media all and (max-width: 767px) {
+  .filters-panel {
+    flex-direction: column;
+  }
+
+  .filters-panel__col + .filters-panel__col {
+    margin-top: 16px;
+  }
+}
+
+@media all and (max-width: 480px) {
+  #filters-panel__search {
+    width: calc(100% - 112px);
+  }
+
+  #filters-panel__search > .form-control {
+    max-width: 100%;
+  }
 }
 </style>
