@@ -68,6 +68,7 @@ export default {
       authApi
         .login(this.user.email, this.user.password)
         .then((res) => {
+         
           alert(res.fullname);
           if (this.$route.query.from !== undefined) {
             this.$router.push(this.$route.query.from);

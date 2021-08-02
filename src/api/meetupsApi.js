@@ -1,42 +1,36 @@
-import fetchJson from "@/utils/fetch-json";
-
-const BASE_URL = process.env.VUE_APP_API_URL;
+import httpClient from "./httpClient";
 
 export const meetupsApi = {
 
   fetchMeetups() {
-    return fetchJson(`${BASE_URL}/meetups`);
+    return httpClient.get("/meetups")
   },
 
   fetchMeetup(meetupId) {
-    return fetchJson(`${BASE_URL}/meetups/${meetupId}`);
+    return httpClient.get(`/meetups/${meetupId}`)
+
   },
 
   createMeetup(meetup) {
 
-    return fetchJson(`${BASE_URL}/meetups/${meetup.id}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-
-      body: JSON.stringify(meetup)
-    });
+    return httpClient.post('/meetups', meetup)
   },
 
   updateMeetup(meetup) {
 
-    return fetchJson(`${BASE_URL}/meetups/${meetup.id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json"
-      },
-
-      body: JSON.stringify(meetup)
-    });
+    return httpClient.put(`/meetups/${meetup.id}`, meetup)
   },
-  //attend(meetupId)// Добавление текущего пользователя в список участников митапа
-  //deleteMeetup(meetupId) //Удаление митапа
-  //leave(meetupId) // Удаление текущего пользователя в список участников митапа
 
+  attend(meetupId) {                                 // Добавление текущего пользователя в список участников митапа
+
+    return httpClient.put(`/meetups/${meetupId}/participation`)
+  },
+
+  deleteMeetup(meetupId) {                           //Удаление митапа
+    return httpClient.delete(`/meetups/${meetupId}`)
+  },
+
+  leave(meetupId) {                               // Удаление текущего пользователя в список участников митапа
+    return httpClient.delete(`/meetups/${meetupId}/participation`)
+  }
 };

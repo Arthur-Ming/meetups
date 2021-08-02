@@ -1,37 +1,53 @@
-import axios from "axios";
+import fetchJson from "@/utils/fetch-json";
 
-export const httpClient = axios.create({
-  baseURL: process.env.VUE_APP_API_URL,
-  timeout: 1000,
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
+export const BASE_URL = process.env.VUE_APP_API_URL;
 
-httpClient.interceptors.response.use(
-  response => {
-    if (response.status >= 400) {
-      return {
-        success: false,
-        result: null,
-        error: {
-          statusCode: response.status,
-          message: response.data.message ?? response.data ?? response.statusText,
-        },
-      };
-    } else {
-      return {
-        success: true,
-        result: response.data,
-        error: null,
-      };
-    }
+export default {
+
+  get(url) {
+
+    return fetchJson(`${BASE_URL}${url}`);
   },
-  error => {
-    if (!error.response || error.code === "ECONNABORTED") {
-      return Promise.reject(new Error(error.request));
-    } else {
-      return Promise.reject(error);
-    }
+
+  post(url, meetup = {}) {
+
+    return fetchJson(`${BASE_URL}${url}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+
+      body: JSON.stringify(meetup)
+    });
+  },
+
+  put(url, meetup = {}) {
+
+    return fetchJson(`${BASE_URL}${url}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+
+      body: JSON.stringify(meetup)
+    });
+  },
+
+  delete(url) {
+    return fetchJson(`${BASE_URL}${url}`, {
+      method: "DELETE",
+    });
+  },
+
+  imagePost(url, file) {
+
+    return fetchJson(`${BASE_URL}${url}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "multipart/form-data"
+      },
+
+      body: file
+    });
   }
-);
+}

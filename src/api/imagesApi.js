@@ -1,5 +1,10 @@
-import { httpClient } from '@/api/httpClient';
+import httpClient from '@/api/httpClient';
+export const API_URL = 'https://course-vue.javascript.ru/api'
+export default {
 
-export function uploadImage(file) {
-  return httpClient.post('/images/upload', file);
+  uploadImage(file) {
+    return httpClient.imagePost('/images/upload', file);
+  },
+
 }
+

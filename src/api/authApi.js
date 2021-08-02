@@ -1,39 +1,27 @@
-import fetchJson from "@/utils/fetch-json";
-
-const BASE_URL = process.env.VUE_APP_API_URL;
+import httpClient from "./httpClient";
 
 export const authApi = {
+
   fetchUser() {
-    return fetchJson('/auth/user');
+    return httpClient.get('/auth/user');
   },
 
   login(email, password) {
-
-    return fetchJson(`${BASE_URL}/auth/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-
-      body: JSON.stringify({
-        email,
-        password,
-      })
-    })
+    return httpClient.post(`/auth/login`, {
+      email,
+      password,
+    });
   },
 
-  register(email, fullname, password) {
-    return fetchJson('/auth/register', {
-      email,
+  register(fullname, email, password) {
+    return httpClient.post('/auth/register', {
       fullname,
+      email,
       password,
     });
   },
 
   logout() {
-    return fetchJson('/auth/login', {
-      email: '',
-      password: '',
-    });
+    return httpClient.post('/auth/login');
   },
 };

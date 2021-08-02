@@ -20,8 +20,8 @@
 </template>
 
 <script>
-import { ImageService } from "../ImageService";
-
+import { ImageService } from "../utils/ImageService";
+import imagesApi from "@/api/imagesApi";
 const LOADING_TEXT = "Загрузка...";
 const EMPTY_TEXT = "Загрузить изображение";
 const DELETE_TEXT = "Удалить изображение";
@@ -72,9 +72,9 @@ export default {
     async uploadImage(e) {
       this.isLoading = true;
 
-      await ImageService.uploadImage(e.target.files["0"]).then((res) => {
-        this.$emit("change", res["id"]);
-      });
+      const { id: imageId } = await imagesApi.uploadImage(e.target.files["0"]);
+
+      this.$emit("change", imageId);
 
       this.isLoading = false;
     },

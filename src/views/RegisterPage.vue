@@ -44,7 +44,7 @@ import FormGroup from "../components/FormGroup";
 import AppInput from "../components/AppInput";
 import AppCheckbox from "../components/AppCheckbox";
 import PrimaryButton from "../components/PrimaryButton";
-import { register } from "../data";
+import { authApi } from "@/api/authApi";
 
 const errorTypes = {
   fullName: "Требуется ввести полное имя",
@@ -77,16 +77,18 @@ export default {
   methods: {
     submitForm() {
       if (this.isFormValidated()) {
-        register(this.user.email, this.user.fullName, this.user.password).then(
-          (res) => {
+        authApi
+          .register(this.user.fullName, this.user.email, this.user.password)
+          .then((res) => {
+            console.log("register");
+            console.log(res);
             if (res.id !== undefined) {
               alert(res.id);
               this.$router.push("/login");
             } else {
               alert(res.message);
             }
-          }
-        );
+          });
       }
     },
 
