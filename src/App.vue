@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <div id="toast"></div>
     <base-layout>
       <main class="main">
         <router-view />

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="wrapper bg-grey">
     <the-header></the-header>
     <slot />
     <the-footer></the-footer>
@@ -7,10 +7,11 @@
 </template>
 
 <script>
-import TheHeader from './TheHeader.vue';
-import TheFooter from './TheFooter.vue';
+import TheHeader from "./TheHeader.vue";
+import TheFooter from "./TheFooter.vue";
+
 export default {
-  name: 'BaseLayout',
+  name: "BaseLayout",
   components: { TheFooter, TheHeader },
 };
 </script>

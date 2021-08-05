@@ -7,16 +7,22 @@
       @submit="handleSubmit"
       @cancel="handleCancel"
     />
+    <!--  <portal selector="#app" prepend="true">
+      <the-toaster ref="toaster" />
+    </portal> -->
   </form-layout>
 </template>
 
 <script>
 import FormLayout from "../components/FormLayout";
 import MeetupForm from "../components/MeetupForm";
+//import TheToaster from "../components/TheToaster.vue";
+
 import { meetupsApi } from "@/api/meetupsApi";
+
 export default {
   name: "FormEditPage",
-  components: { FormLayout, MeetupForm },
+  components: { FormLayout, MeetupForm /* TheToaster */ },
 
   props: {
     meetupId: {
@@ -46,10 +52,19 @@ export default {
       meetup: null,
     };
   },
+
   methods: {
-    handleSubmit(meetup) {
-      meetupsApi.updateMeetup(meetup);
-      this.meetup = meetup;
+    async handleSubmit(meetup) {
+      //  this.$refs.toaster.success("Portal");
+
+      try {
+        await meetupsApi.updateMeetup(meetup);
+        this.$toaster.success("!!!!");
+        this.meetup = meetup;
+      } catch (err) {
+        console.log(err);
+        this.$toaster.error("Ошибка");
+      }
     },
 
     handleCancel() {
