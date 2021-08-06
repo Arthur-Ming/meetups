@@ -1,6 +1,6 @@
 import TheToaster from "../components/TheToaster";
 
-export const ToasterPlugin = {
+export default {
 
    install(Vue, options = {}) {
       let { container } = options;

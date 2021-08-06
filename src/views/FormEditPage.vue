@@ -62,8 +62,10 @@ export default {
         this.$toaster.success("!!!!");
         this.meetup = meetup;
       } catch (err) {
-        console.log(err);
+        //this.$progress.fail();
+
         this.$toaster.error("Ошибка");
+        throw err;
       }
     },
 
