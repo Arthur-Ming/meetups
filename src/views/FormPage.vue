@@ -13,6 +13,7 @@
 import FormLayout from "../components/FormLayout";
 import MeetupForm from "../components/MeetupForm";
 import { meetupsApi } from "@/api/meetupsApi";
+import { withProgress } from "@/helpers/withProgress.js";
 export default {
   name: "FormPage",
   components: { FormLayout, MeetupForm },
@@ -32,10 +33,15 @@ export default {
   },
 
   methods: {
-    handleSubmit(meetup) {
-      console.log("handleSubmit");
-      this.meetup = meetup;
-      meetupsApi.createMeetup(meetup);
+    async handleSubmit(meetup) {
+      try {
+        await withProgress(meetupsApi.createMeetup(meetup));
+        this.$toaster.success("!!!!");
+        this.meetup = meetup;
+      } catch (err) {
+        this.$toaster.error("Ошибка");
+        throw err;
+      }
     },
 
     handleCancel() {

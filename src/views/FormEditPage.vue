@@ -16,6 +16,7 @@
 <script>
 import FormLayout from "../components/FormLayout";
 import MeetupForm from "../components/MeetupForm";
+import { withProgress } from "@/helpers/withProgress.js";
 //import TheToaster from "../components/TheToaster.vue";
 
 import { meetupsApi } from "@/api/meetupsApi";
@@ -55,15 +56,11 @@ export default {
 
   methods: {
     async handleSubmit(meetup) {
-      //  this.$refs.toaster.success("Portal");
-
       try {
-        await meetupsApi.updateMeetup(meetup);
+        await withProgress(meetupsApi.updateMeetup(meetup));
         this.$toaster.success("!!!!");
         this.meetup = meetup;
       } catch (err) {
-        //this.$progress.fail();
-
         this.$toaster.error("Ошибка");
         throw err;
       }

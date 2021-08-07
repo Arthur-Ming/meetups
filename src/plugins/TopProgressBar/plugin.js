@@ -1,4 +1,5 @@
 import TheTopProgressBar from "@/components/TheTopProgressBar";
+import TopProgressBar from './index';
 
 export default {
 
@@ -9,24 +10,25 @@ export default {
       document.body.appendChild(container);
     }
 
-    const topProgressBar = new Vue(TheTopProgressBar).$mount(container);
-    Vue.prototype.$progress = topProgressBar;
+    TopProgressBar.setInstance(new Vue(TheTopProgressBar).$mount(container));
+    Vue.prototype.$progress = TopProgressBar;
 
-    Vue.$progress = topProgressBar;
+
+    Vue.$progress = TopProgressBar;
 
     if (options && options.router) {
       options.router.beforeEach((to, from, next) => {
-        topProgressBar.start();
+        TopProgressBar.start();
         next();
       });
 
       options.router.afterEach(() => {
-        topProgressBar.finish();
+        TopProgressBar.finish();
       });
 
       options.router.onError((err) => {
 
-        topProgressBar.fail();
+        TopProgressBar.fail();
         throw err;
       });
     }

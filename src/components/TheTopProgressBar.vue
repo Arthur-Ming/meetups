@@ -15,7 +15,6 @@ export default {
       isShow: false,
       isFail: false,
       currentProgress: 0,
-      requestId: null,
     };
   },
 
@@ -43,10 +42,9 @@ export default {
 
     finish() {
       if (this.isShow) {
-        cancelAnimationFrame(this.requestId);
         const currentProgress = this.currentProgress;
         this.animate({
-          duration: 500,
+          duration: 1000,
           timing: (timeFraction) => {
             return timeFraction;
           },
@@ -76,8 +74,8 @@ export default {
 
         draw(progress);
 
-        if (timeFraction < 1 && this.currentProgress < 100) {
-          this.requestId = requestAnimationFrame(animate);
+        if (timeFraction < 1 && this.currentProgress < 100 && this.isShow) {
+          requestAnimationFrame(animate);
         } else {
           this.isShow = false;
 
@@ -102,7 +100,7 @@ export default {
   width: 0;
   opacity: 0;
   background: var(--blue);
-  transition: all 0.2s linear 0.2s;
+  transition: opacity 0.2s linear 0.2s;
 
   z-index: 999999;
 }

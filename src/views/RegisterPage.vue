@@ -45,6 +45,7 @@ import AppInput from "../components/AppInput";
 import AppCheckbox from "../components/AppCheckbox";
 import PrimaryButton from "../components/PrimaryButton";
 import { authApi } from "@/api/authApi";
+import { withProgress } from "@/helpers/withProgress.js";
 
 const errorTypes = {
   fullName: "Требуется ввести полное имя",
@@ -75,20 +76,28 @@ export default {
   },
 
   methods: {
-    submitForm() {
+    async submitForm() {
       if (this.isFormValidated()) {
-        authApi
-          .register(this.user.fullName, this.user.email, this.user.password)
-          .then((res) => {
-            console.log("register");
-            console.log(res);
-            if (res.id !== undefined) {
-              alert(res.id);
-              this.$router.push("/login");
-            } else {
-              alert(res.message);
-            }
-          });
+        try {
+          const res = await withProgress(
+            authApi.register(
+              this.user.fullName,
+              this.user.email,
+              this.user.password
+            )
+          );
+
+          if (res.id !== undefined) {
+            alert(res.id);
+            this.$router.push("/login");
+          } else {
+            alert(res.message);
+          }
+
+          this.$toaster.success("Регистрация выполнена успешно!");
+        } catch (error) {
+          this.$toaster.error(error);
+        }
       }
     },
 

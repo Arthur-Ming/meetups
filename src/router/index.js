@@ -90,6 +90,7 @@ export const router = new VueRouter({
     },
     {
       path: '*',
+      name: "notFoundPage",
       component: () => import('../views/NotFoundPage')
     }
 

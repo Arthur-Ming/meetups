@@ -44,6 +44,7 @@
 <script>
 //import { fetchMeetups } from "../data";
 import { meetupsApi } from "../api/meetupsApi";
+//import { withProgress } from "@/helpers/withProgress.js";
 import MeetupsList from "../components/MeetupsList";
 import MeetupsCalendar from "../components/MeetupsCalendar";
 import PageTabs from "../components/PageTabs";

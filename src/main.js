@@ -4,7 +4,7 @@ import '@/assets/styles/app.css';
 import "@/assets/styles/index.css";
 import { router } from './router';
 import ToasterPlugin from '@/plugins/ToasterPlugin.js'
-import TheTopProgressBarPlugin from '@/plugins/TheTopProgressBarPlugin.js'
+import TheTopProgressBarPlugin from '@/plugins/TopProgressBar/plugin.js'
 
 Vue.config.productionTip = false;
 

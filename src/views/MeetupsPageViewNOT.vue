@@ -3,8 +3,9 @@
     <div class="filters-panel">
       <div class="filters-panel__col">
         <form-check
-          v-model="params.date"
+          v-model="filter.date"
           :options="$options.dateFilterOptions"
+          @change="$emit('update:date', filter.date)"
         />
       </div>
 
@@ -12,7 +13,8 @@
         <form-group inline>
           <app-input
             id="filters-panel__search"
-            v-model="params.search"
+            v-model="filter.search"
+            @change="$emit('update:search', filter.search)"
             type="text"
             placeholder="Поиск"
             small
@@ -25,7 +27,7 @@
         </form-group>
 
         <form-group inline>
-          <page-tabs :selected.sync="params.view" />
+          <page-tabs :selected.sync="currentView" />
         </form-group>
       </div>
     </div>
@@ -51,9 +53,8 @@ import FormGroup from "../components/FormGroup";
 import AppEmpty from "../components/AppEmpty";
 import AppInput from "../components/AppInput";
 import AppIcon from "../components/AppIcon";
-
 export default {
-  name: "MeetupsPage",
+  name: "MeetupsView",
   components: {
     PageTabs,
     FormCheck,
@@ -67,54 +68,45 @@ export default {
     { text: "Прошедшие", value: "past" },
     { text: "Ожидаемые", value: "future" },
   ],
+  props: {
+    view: {
+      type: String,
+      default: "list",
+      validator: (value) => ["list", "calendar"].includes(value),
+    },
 
+    date: {
+      type: String,
+      default: "all",
+      validator: (value) => ["all", "future", "past"].includes(value),
+    },
+
+    participation: {
+      type: String,
+      default: "all",
+      validator: (value) => ["all", "attending", "organizing"].includes(value),
+    },
+
+    search: {
+      type: String,
+      default: "",
+    },
+  },
   data() {
     return {
       rawMeetups: [],
-      params: {
-        date: "all",
-        participation: "all",
-        search: "",
-        view: "list",
+      filter: {
+        date: this.date,
+        participation: this.participation,
+        search: this.search,
       },
+
+      currentView: this.view,
     };
   },
-
   watch: {
-    params: {
-      deep: true,
-      handler() {
-        const { view, date, participation, search } = this.params;
-
-        this.$router
-          .push({
-            query: {
-              view: view === "list" ? undefined : view,
-              date: date === "all" ? undefined : date,
-              participation:
-                participation === "all" ? undefined : participation,
-              search: search === "" ? undefined : search,
-            },
-          })
-          .catch((error) => {
-            if (error.name !== "NavigationDuplicated") {
-              throw error;
-            }
-          });
-      },
-    },
-
-    $route: {
-      immediate: true,
-      handler() {
-        const { view, date, participation, search } = this.$route.query;
-        this.params = {
-          date: date === undefined ? "all" : date,
-          participation: participation === undefined ? "all" : participation,
-          search: search === undefined ? "" : search,
-          view: view === undefined ? "list" : view,
-        };
-      },
+    currentView(newView) {
+      this.$emit("update:view", newView);
     },
   },
   computed: {
@@ -141,20 +133,20 @@ export default {
 
     filteredMeetups() {
       const dateFilter = (meetup) =>
-        this.params.date === "all" ||
-        (this.params.date === "past" && new Date(meetup.date) <= new Date()) ||
-        (this.params.date === "future" && new Date(meetup.date) > new Date());
+        this.filter.date === "all" ||
+        (this.filter.date === "past" && new Date(meetup.date) <= new Date()) ||
+        (this.filter.date === "future" && new Date(meetup.date) > new Date());
 
       const participationFilter = (meetup) =>
-        this.params.participation === "all" ||
-        (this.params.participation === "organizing" && meetup.organizing) ||
-        (this.params.participation === "attending" && meetup.attending);
+        this.filter.participation === "all" ||
+        (this.filter.participation === "organizing" && meetup.organizing) ||
+        (this.filter.participation === "attending" && meetup.attending);
 
       const searchFilter = (meetup) =>
         [meetup.title, meetup.description, meetup.place, meetup.organizer]
           .join(" ")
           .toLowerCase()
-          .includes(this.params.search.toLowerCase());
+          .includes(this.filter.search.toLowerCase());
 
       return this.meetups
         .filter(
@@ -167,26 +159,18 @@ export default {
     },
 
     viewComponent() {
-      return this.params.view === "list" ? MeetupsList : MeetupsCalendar;
-    },
-  },
-  methods: {
-    setMeetups(meetup) {
-      this.rawMeetups = meetup;
+      return this.currentView === "list" ? MeetupsList : MeetupsCalendar;
     },
   },
 
-  beforeRouteEnter(to, from, next) {
-    meetupsApi
-      .fetchMeetups()
-      .then((meetups) => {
-        next((vm) => {
-          vm.setMeetups(meetups);
-        });
-      })
-      .catch(() => {
-        next("notFoundPage");
-      });
+  mounted() {
+    this.fetchMeetups();
+  },
+
+  methods: {
+    async fetchMeetups() {
+      this.rawMeetups = await meetupsApi.fetchMeetups();
+    },
   },
 };
 </script>
