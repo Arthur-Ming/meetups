@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import AppIcon from "../components/AppIcon.vue";
+import AppIcon from "@/components/ui/AppIcon.vue";
 export default {
   name: "MeetupInfo",
   components: {

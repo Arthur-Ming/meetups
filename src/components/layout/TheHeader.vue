@@ -23,7 +23,7 @@
       <router-link :to="{ name: 'meetups_create' }">Создать митап</router-link>
       <router-link :to="{ name: 'login' }">Вход</router-link>
       <router-link :to="{ name: 'register' }">Регистрация</router-link>
-      <router-link to="#">Выйти</router-link>
+      <router-link :to="{ name: 'exit' }">Выйти</router-link>
     </nav>
   </header>
 </template>

@@ -1,7 +1,7 @@
 <template>
   <div class="page page_onboarding">
     <div class="container">
-      <h1 class="page__title text-center">Регистрация</h1>
+      <h1 class="page__title text-center">{{ title }}</h1>
 
       <form class="form" @submit.prevent="submitForm">
         <form-group label="Email">
@@ -40,10 +40,10 @@
 </template>
 
 <script>
-import FormGroup from "../components/FormGroup";
-import AppInput from "../components/AppInput";
-import AppCheckbox from "../components/AppCheckbox";
-import PrimaryButton from "../components/PrimaryButton";
+import FormGroup from "../components/layouts/FormGroup";
+import AppInput from "../components/ui/AppInput";
+import AppCheckbox from "../components/ui/AppCheckbox";
+import PrimaryButton from "../components/ui/PrimaryButton";
 import { authApi } from "@/api/authApi";
 import { withProgress } from "@/helpers/withProgress.js";
 
@@ -65,6 +65,7 @@ export default {
   },
   data() {
     return {
+      title: "Регистрация",
       user: {
         fullName: "",
         email: "",
@@ -74,7 +75,11 @@ export default {
       },
     };
   },
-
+  metaInfo() {
+    return {
+      title: this.title,
+    };
+  },
   methods: {
     async submitForm() {
       if (this.isFormValidated()) {

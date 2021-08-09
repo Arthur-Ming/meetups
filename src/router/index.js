@@ -89,6 +89,12 @@ export const router = new VueRouter({
       component: () => import('../views/FormEditPage'),
     },
     {
+      path: '#',
+      name: 'exit',
+      redirect: () => ({ name: 'login' }),
+      component: () => import('../views/LoginPage'),
+    },
+    {
       path: '*',
       name: "notFoundPage",
       component: () => import('../views/NotFoundPage')

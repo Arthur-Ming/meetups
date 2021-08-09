@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { ImageService } from "../utils/ImageService";
+import { ImageService } from "@/utils/ImageService";
 import imagesApi from "@/api/imagesApi";
 const LOADING_TEXT = "Загрузка...";
 const EMPTY_TEXT = "Загрузить изображение";

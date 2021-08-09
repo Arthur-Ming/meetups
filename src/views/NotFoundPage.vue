@@ -2,7 +2,7 @@
   <div class="page page_404">
     <div class="container">
       <h1 class="text-center">
-        Страница не найдена
+        {{ title }}
         <span>404</span>
       </h1>
     </div>
@@ -11,7 +11,17 @@
 
 <script>
 export default {
-  name: 'NotFoundPage',
+  name: "NotFoundPage",
+  data() {
+    return {
+      title: "Страница не найдена",
+    };
+  },
+  metaInfo() {
+    return {
+      title: this.title,
+    };
+  },
 };
 </script>
 

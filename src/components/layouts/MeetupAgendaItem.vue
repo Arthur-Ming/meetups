@@ -23,8 +23,8 @@
 </template>
 
 <script>
-import AppIcon from "../components/AppIcon.vue";
-import { getAgendaItemIcons, getAgendaItemDefaultTitles } from "../data.js";
+import AppIcon from "@/components/ui/AppIcon.vue";
+import { getAgendaItemIcons, getAgendaItemDefaultTitles } from "@/data.js";
 
 export default {
   name: "MeetupAgendaItem",

@@ -1,5 +1,5 @@
 <template>
-  <form-layout title="Создание митапа">
+  <form-layout :title="title">
     <meetup-form
       v-if="meetup"
       :meetup="meetup"
@@ -14,8 +14,8 @@
 </template>
 
 <script>
-import FormLayout from "../components/FormLayout";
-import MeetupForm from "../components/MeetupForm";
+import FormLayout from "@/components/layouts/FormLayout";
+import MeetupForm from "@/components/layouts/MeetupForm";
 import { withProgress } from "@/helpers/withProgress.js";
 //import TheToaster from "../components/TheToaster.vue";
 
@@ -50,10 +50,15 @@ export default {
   },
   data() {
     return {
+      title: "Редактирование митапа",
       meetup: null,
     };
   },
-
+  metaInfo() {
+    return {
+      title: this.title,
+    };
+  },
   methods: {
     async handleSubmit(meetup) {
       try {

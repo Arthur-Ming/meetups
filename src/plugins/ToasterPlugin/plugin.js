@@ -1,4 +1,4 @@
-import TheToaster from "../components/TheToaster";
+import TheToaster from "./TheToaster";
 
 export default {
 

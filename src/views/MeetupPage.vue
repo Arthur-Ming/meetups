@@ -37,11 +37,11 @@
 </template>
 
 <script>
-import ContentTabs from "../components/ContentTabs";
-import DangerButton from "../components/DangerButton.vue";
-import MeetupCover from "../components/MeetupCover";
-import MeetupInfo from "../components/MeetupInfo";
-import PrimaryButton from "../components/PrimaryButton";
+import ContentTabs from "../components/ui/ContentTabs";
+import DangerButton from "../components/ui/DangerButton.vue";
+import MeetupCover from "../components/layouts/MeetupCover";
+import MeetupInfo from "../components/layouts/MeetupInfo";
+import PrimaryButton from "../components/ui/PrimaryButton";
 import { meetupsApi } from "@/api/meetupsApi";
 import { getMeetupCoverLink } from "../data";
 
@@ -94,6 +94,12 @@ export default {
         { to: { name: "meetup.description" }, text: "Описание" },
         { to: { name: "meetup.agenda" }, text: "Программа" },
       ],
+    };
+  },
+  metaInfo() {
+    return {
+      //title: this.meetup?.title,
+      title: this.meetup && this.meetup.title,
     };
   },
   computed: {

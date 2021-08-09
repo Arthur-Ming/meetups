@@ -43,14 +43,14 @@
 //import { fetchMeetups } from "../data";
 import { meetupsApi } from "../api/meetupsApi";
 //import { withProgress } from "@/helpers/withProgress.js";
-import MeetupsList from "../components/MeetupsList";
-import MeetupsCalendar from "../components/MeetupsCalendar";
-import PageTabs from "../components/PageTabs";
-import FormCheck from "../components/FormCheck";
-import FormGroup from "../components/FormGroup";
-import AppEmpty from "../components/AppEmpty";
-import AppInput from "../components/AppInput";
-import AppIcon from "../components/AppIcon";
+import MeetupsList from "../components/layouts/MeetupsList";
+import MeetupsCalendar from "../components/layouts/MeetupsCalendar";
+import PageTabs from "../components/ui/PageTabs";
+import FormCheck from "../components/ui/FormCheck";
+import FormGroup from "../components/layouts/FormGroup";
+import AppEmpty from "../components/layouts/AppEmpty";
+import AppInput from "../components/ui/AppInput";
+import AppIcon from "../components/ui/AppIcon";
 
 export default {
   name: "MeetupsPage",
@@ -79,7 +79,11 @@ export default {
       },
     };
   },
-
+  metaInfo() {
+    return {
+      title: "Митапы",
+    };
+  },
   watch: {
     params: {
       deep: true,

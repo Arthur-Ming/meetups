@@ -1,4 +1,4 @@
-import TheTopProgressBar from '@/components/TheTopProgressBar';
+import TheTopProgressBar from './TheTopProgressBar';
 
 export default {
   instance: null,

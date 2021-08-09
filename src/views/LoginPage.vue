@@ -1,7 +1,7 @@
 <template>
   <div class="page page_onboarding">
     <div class="container">
-      <h1 class="page__title text-center">Вход</h1>
+      <h1 class="page__title text-center">{{ title }}</h1>
       <form class="form" @submit.prevent="submitForm">
         <form-group label="Email">
           <app-input
@@ -32,9 +32,9 @@
 </template>
 
 <script>
-import FormGroup from "../components/FormGroup";
-import AppInput from "../components/AppInput";
-import PrimaryButton from "../components/PrimaryButton";
+import FormGroup from "../components/layouts/FormGroup";
+import AppInput from "../components/ui/AppInput";
+import PrimaryButton from "../components/ui/PrimaryButton";
 import { authApi } from "@/api/authApi";
 import { withProgress } from "@/helpers/withProgress.js";
 //import { login } from "../data";
@@ -49,13 +49,18 @@ export default {
   },
   data() {
     return {
+      title: "Вход",
       user: {
         email: "demo@email",
         password: "password",
       },
     };
   },
-
+  metaInfo() {
+    return {
+      title: this.title,
+    };
+  },
   methods: {
     async submitForm() {
       if (this.user.email === "") {

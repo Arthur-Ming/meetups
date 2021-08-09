@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import AppIcon from "./AppIcon";
+import AppIcon from "@/components/ui/AppIcon";
 
 const DELAY = 5000;
 

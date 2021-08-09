@@ -53,11 +53,11 @@
 <script>
 import MeetupAgendaItemForm from "./MeetupAgendaItemForm.vue";
 import FormGroup from "./FormGroup.vue";
-import AppInput from "./AppInput.vue";
+import AppInput from "@/components/ui/AppInput.vue";
 import ImageUploader from "./ImageUploader";
-import PrimaryButton from "../components/PrimaryButton";
-import SecondaryButton from "../components/SecondaryButton";
-import DateInput from "./DateInput";
+import PrimaryButton from "@/components/ui/PrimaryButton";
+import SecondaryButton from "@/components/ui/SecondaryButton";
+import DateInput from "@/components/ui/DateInput";
 
 const _ = require("lodash");
 

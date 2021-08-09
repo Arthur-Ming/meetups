@@ -43,15 +43,15 @@
 </template>
 
 <script>
-import AppInput from "./AppInput";
-import DropdownButton from "./DropdownButton";
-import AppIcon from "./AppIcon";
+import AppInput from "@/components/ui/AppInput";
+import DropdownButton from "@/components/ui/DropdownButton";
+import AppIcon from "@/components/ui/AppIcon";
 import FormGroup from "./FormGroup";
-import DateInput from "./DateInput";
+import DateInput from "@/components/ui/DateInput";
 import {
   getAgendaItemsFieldSpecifications,
   getAgendaItemTypeOptions,
-} from "../MeetupService";
+} from "@/MeetupService";
 
 export default {
   name: "MeetupAgendaItemForm",
