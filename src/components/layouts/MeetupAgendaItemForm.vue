@@ -51,7 +51,7 @@ import DateInput from "@/components/ui/DateInput";
 import {
   getAgendaItemsFieldSpecifications,
   getAgendaItemTypeOptions,
-} from "@/MeetupService";
+} from "@/services/MeetupService";
 
 export default {
   name: "MeetupAgendaItemForm",

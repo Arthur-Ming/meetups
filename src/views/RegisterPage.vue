@@ -101,7 +101,9 @@ export default {
 
           this.$toaster.success("Регистрация выполнена успешно!");
         } catch (error) {
-          this.$toaster.error(error);
+          this.$toaster.error(error.body.message);
+
+          throw error;
         }
       }
     },

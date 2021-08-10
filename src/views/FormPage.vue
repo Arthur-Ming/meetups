@@ -43,9 +43,9 @@ export default {
         await withProgress(meetupsApi.createMeetup(meetup));
         this.$toaster.success("!!!!");
         this.meetup = meetup;
-      } catch (err) {
-        this.$toaster.error("Ошибка");
-        throw err;
+      } catch (error) {
+        this.$toaster.error(error.body.message);
+        throw error;
       }
     },
 

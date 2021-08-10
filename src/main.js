@@ -4,8 +4,9 @@ import '@/assets/styles/app.css';
 import "@/assets/styles/index.css";
 import { router } from './router';
 import VueMeta from 'vue-meta';
-import ToasterPlugin from '@/plugins/ToasterPlugin/plugin.js'
-import TheTopProgressBarPlugin from '@/plugins/TopProgressBar/plugin.js'
+import ToasterPlugin from '@/plugins/ToasterPlugin/plugin.js';
+import TheTopProgressBarPlugin from '@/plugins/TopProgressBar/plugin.js';
+
 
 Vue.config.productionTip = false;
 Vue.use(VueMeta)

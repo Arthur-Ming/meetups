@@ -64,18 +64,17 @@ export default {
   methods: {
     async submitForm() {
       if (this.user.email === "") {
-        alert("Требуется ввести Email");
+        //  alert("Требуется ввести Email");
+        this.$toaster.error("Требуется ввести Email");
         return;
       } else if (this.user.password === "") {
-        alert("Требуется ввести пароль");
+        this.$toaster.error("Требуется ввести пароль");
+        // alert("Требуется ввести пароль");
         return;
       }
       try {
-        const res = await withProgress(
-          authApi.login(this.user.email, this.user.password)
-        );
+        await withProgress(authApi.login(this.user.email, this.user.password));
 
-        alert(res.fullname);
         if (this.$route.query.from !== undefined) {
           this.$router.push(this.$route.query.from);
         } else {
@@ -83,7 +82,9 @@ export default {
         }
         this.$toaster.success("Авторизация прошла успешно!");
       } catch (error) {
-        this.$toaster.error(error);
+        this.$toaster.error(error.body.message);
+
+        throw error;
       }
     },
   },

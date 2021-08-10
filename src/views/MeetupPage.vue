@@ -57,27 +57,34 @@ export default {
     DangerButton,
   },
 
-  beforeRouteEnter(to, from, next) {
-    meetupsApi
-      .fetchMeetup(to.params.meetupId)
-      .then((meetup) => {
-        next((vm) => {
-          vm.setMeetup(meetup);
-        });
-      })
-      .catch(() => {
-        next("/meetups");
+  async beforeRouteEnter(to, from, next) {
+    try {
+      const meetup = await meetupsApi.fetchMeetup(to.params.meetupId);
+      next((vm) => {
+        vm.setMeetup(meetup);
       });
+    } catch (error) {
+      next((vm) => {
+        vm.$toaster.error(error.body.message);
+        vm.$router.push({ name: "index" });
+      });
+    }
   },
 
-  beforeRouteUpdate(to, from, next) {
+  async beforeRouteUpdate(to, from, next) {
     if (to.params.meetupId === from.params.meetupId) {
       next();
     } else {
-      meetupsApi.fetchMeetup(to.params.meetupId).then((meetup) => {
+      try {
+        const meetup = await meetupsApi.fetchMeetup(to.params.meetupId);
         this.setMeetup(meetup);
         next();
-      });
+      } catch (error) {
+        next((vm) => {
+          vm.$toaster.error(error.body.message);
+          vm.$router.push({ name: "index" });
+        });
+      }
     }
   },
 

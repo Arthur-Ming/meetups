@@ -1,4 +1,5 @@
 import TheToaster from "./TheToaster";
+import Toaster from "./index";
 
 export default {
 
@@ -8,8 +9,9 @@ export default {
          container = document.createElement('div');
          document.body.appendChild(container);
       }
-
-      const toaster = new Vue(TheToaster).$mount(container);
-      Vue.prototype.$toaster = toaster;
+      Toaster.setInstance(new Vue(TheToaster).$mount(container));
+      Vue.prototype.$toaster = Toaster;
+      /*  const toaster = new Vue(TheToaster).$mount(container);
+       Vue.prototype.$toaster = toaster; */
    }
 }
