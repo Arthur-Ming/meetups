@@ -20,6 +20,13 @@ export default {
       body: JSON.stringify(meetup)
     });
   },
+  pos(url) {
+
+    return fetchJson(`${BASE_URL}${url}`, {
+      method: "POST",
+
+    });
+  },
 
   put(url, meetup = {}) {
 

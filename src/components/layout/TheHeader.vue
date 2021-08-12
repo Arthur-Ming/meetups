@@ -11,24 +11,36 @@
       </router-link>
       <router-link
         :to="{ name: 'meetups', query: { participation: 'attending' } }"
+        v-if="isAuthenticated"
       >
         Мои митапы
       </router-link>
 
       <router-link
         :to="{ name: 'meetups', query: { participation: 'organizing' } }"
+        v-if="isAuthenticated"
       >
         Организуемые митапы
       </router-link>
-      <router-link :to="{ name: 'meetups_create' }">Создать митап</router-link>
-      <router-link :to="{ name: 'login' }">Вход</router-link>
+
+      <router-link :to="{ name: 'login' }" v-if="!isAuthenticated"
+        >Вход</router-link
+      >
       <router-link :to="{ name: 'register' }">Регистрация</router-link>
-      <router-link :to="{ name: 'exit' }">Выйти</router-link>
+      <router-link :to="{ name: 'meetups_create' }">Создать митап</router-link>
+      <router-link
+        :to="{ name: 'exit' }"
+        v-if="isAuthenticated"
+        @click.native="logout"
+        >Выйти</router-link
+      >
     </nav>
   </header>
 </template>
 
 <script>
+import store from "@/store/index.js";
+import { authApi } from "@/api/authApi";
 export default {
   name: "TheHeader",
   computed: {
@@ -36,6 +48,22 @@ export default {
       return this.$route.matched.some(
         (route) => route.meta.showReturnToMeetups
       );
+    },
+    isAuthenticated() {
+      return store.auth.isAuthenticated();
+    },
+  },
+  methods: {
+    logout() {
+      authApi
+        .logout()
+        .then(() => {
+          store.auth.logoutUser();
+        })
+        .catch((err) => {
+          if (err.message !== "Unexpected end of JSON input") throw err;
+          else store.auth.logoutUser();
+        });
     },
   },
 };

@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import store from "@/store/index.js";
 
 Vue.use(VueRouter);
 
@@ -20,6 +21,24 @@ function scrollBehavior(to, from, savedPosition) {
     };
   }
   return { x: 0, y: 0 };
+}
+
+function requireAuthGuard(to, from, next) {
+  // Если переходим на маршрут, содержащим requireAuth
+  if (to.matched.some((route) => route.meta.requireAuth)) {
+    // Делаем проверку
+    if (store.auth.isAuthenticated()) {
+      // или if (store.state.auth.isAuthenticated)
+      // Переходим
+      next();
+    } else {
+      // Нет, сюда нельзя, отменяем переход
+      next({ name: 'login' });
+    }
+  } else {
+    // авторизация не требуется, делаем переход, как обычно
+    next();
+  }
 }
 
 Vue.use(VueRouter);
@@ -80,6 +99,9 @@ export const router = new VueRouter({
     {
       path: '/meetups/create',
       name: 'meetups_create',
+      meta: {
+        requireAuth: true,
+      },
       component: () => import('../views/FormPage'),
     },
     {
@@ -91,8 +113,8 @@ export const router = new VueRouter({
     {
       path: '#',
       name: 'exit',
-      redirect: () => ({ name: 'login' }),
-      component: () => import('../views/LoginPage'),
+      //redirect: () => ({ name: 'login' }),
+      component: () => import('../views/MeetupsPage'),
     },
     {
       path: '*',
@@ -102,3 +124,5 @@ export const router = new VueRouter({
 
   ],
 });
+
+router.beforeEach(requireAuthGuard);

@@ -22,6 +22,6 @@ export const authApi = {
   },
 
   logout() {
-    return httpClient.post('/auth/login');
+    return httpClient.pos('/auth/logout');
   },
 };

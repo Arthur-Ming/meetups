@@ -37,6 +37,7 @@ import AppInput from "../components/ui/AppInput";
 import PrimaryButton from "../components/ui/PrimaryButton";
 import { authApi } from "@/api/authApi";
 import { withProgress } from "@/helpers/withProgress.js";
+import store from "@/store/index.js";
 //import { login } from "../data";
 
 export default {
@@ -73,8 +74,10 @@ export default {
         return;
       }
       try {
-        await withProgress(authApi.login(this.user.email, this.user.password));
-
+        const user = await withProgress(
+          authApi.login(this.user.email, this.user.password)
+        );
+        store.auth.setUser(user);
         if (this.$route.query.from !== undefined) {
           this.$router.push(this.$route.query.from);
         } else {
