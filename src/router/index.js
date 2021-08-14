@@ -27,7 +27,7 @@ function requireAuthGuard(to, from, next) {
   // Если переходим на маршрут, содержащим requireAuth
   if (to.matched.some((route) => route.meta.requireAuth)) {
     // Делаем проверку
-    if (store.auth.isAuthenticated()) {
+    if (store.getters['auth/IS_AUTHENTICATED']) {
       // или if (store.state.auth.isAuthenticated)
       // Переходим
       next();
@@ -107,6 +107,9 @@ export const router = new VueRouter({
     {
       path: "/meetups/:meetupId(\\d+)/edit",
       name: "meetup-edit",
+      meta: {
+        requireAuth: true,
+      },
       props: true,
       component: () => import('../views/FormEditPage'),
     },

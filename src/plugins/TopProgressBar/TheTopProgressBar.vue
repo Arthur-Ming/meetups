@@ -44,7 +44,7 @@ export default {
       if (this.isShow) {
         const currentProgress = this.currentProgress;
         this.animate({
-          duration: 1000,
+          duration: 500,
           timing: (timeFraction) => {
             return timeFraction;
           },

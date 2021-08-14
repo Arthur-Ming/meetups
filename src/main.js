@@ -16,17 +16,18 @@ Vue.use(TheTopProgressBarPlugin, { router })
 
 authApi.fetchUser().then((user) => {
 
-  store.auth.setUser(user)
+  store.commit('auth/SET_USER', user)
 }).catch(() => {
 
-
-
 }).finally(() => {
+
   new Vue({
     router,
     render: (h) => h(App),
   }).$mount('#app');
 })
+
+
 
 
 

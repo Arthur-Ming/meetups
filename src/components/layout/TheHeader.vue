@@ -40,7 +40,8 @@
 
 <script>
 import store from "@/store/index.js";
-import { authApi } from "@/api/authApi";
+import { withProgress } from "@/helpers/withProgress.js";
+
 export default {
   name: "TheHeader",
   computed: {
@@ -50,20 +51,18 @@ export default {
       );
     },
     isAuthenticated() {
-      return store.auth.isAuthenticated();
+      return store.getters["auth/IS_AUTHENTICATED"];
     },
   },
   methods: {
-    logout() {
-      authApi
-        .logout()
-        .then(() => {
-          store.auth.logoutUser();
-        })
-        .catch((err) => {
-          if (err.message !== "Unexpected end of JSON input") throw err;
-          else store.auth.logoutUser();
-        });
+    async logout() {
+      try {
+        await withProgress(store.dispatch("auth/LOGOUT"));
+        this.$router.push({ name: "login" });
+        location.reload();
+      } catch (error) {
+        this.$toaster.error(error.message);
+      }
     },
   },
 };

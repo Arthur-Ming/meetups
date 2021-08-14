@@ -3,6 +3,7 @@
 // network error / json error are errors
 import Toaster from "@/plugins/ToasterPlugin/index.js";
 
+
 export default async function (url, params) {
   let response;
 
@@ -53,6 +54,7 @@ export class FetchError extends Error {
 window.addEventListener('unhandledrejection', event => {
   if (event.reason instanceof FetchError) {
     Toaster.error(event.reason.message)
+
 
   }
 });

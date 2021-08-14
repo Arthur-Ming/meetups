@@ -35,10 +35,8 @@
 import FormGroup from "../components/layouts/FormGroup";
 import AppInput from "../components/ui/AppInput";
 import PrimaryButton from "../components/ui/PrimaryButton";
-import { authApi } from "@/api/authApi";
 import { withProgress } from "@/helpers/withProgress.js";
 import store from "@/store/index.js";
-//import { login } from "../data";
 
 export default {
   name: "LoginPage",
@@ -65,19 +63,21 @@ export default {
   methods: {
     async submitForm() {
       if (this.user.email === "") {
-        //  alert("Требуется ввести Email");
         this.$toaster.error("Требуется ввести Email");
         return;
       } else if (this.user.password === "") {
         this.$toaster.error("Требуется ввести пароль");
-        // alert("Требуется ввести пароль");
         return;
       }
+
       try {
-        const user = await withProgress(
-          authApi.login(this.user.email, this.user.password)
+        await withProgress(
+          store.dispatch("auth/LOGIN", {
+            email: this.user.email,
+            password: this.user.password,
+          })
         );
-        store.auth.setUser(user);
+
         if (this.$route.query.from !== undefined) {
           this.$router.push(this.$route.query.from);
         } else {
@@ -86,7 +86,6 @@ export default {
         this.$toaster.success("Авторизация прошла успешно!");
       } catch (error) {
         this.$toaster.error(error.body.message);
-
         throw error;
       }
     },
