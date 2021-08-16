@@ -15,16 +15,33 @@
               :place="meetup.place"
               :date="meetupDate"
             />
-            <div class="meetup__aside-buttons">
-              <primary-button block>Участвовать</primary-button>
+            <div class="meetup__aside-buttons" v-if="isAuthenticated">
               <primary-button
+                block
+                v-if="!meetup.attending && !meetup.organizing"
+                @click="handleAttend"
+                >Участвовать</primary-button
+              >
+              <secondary-button
+                block
+                v-if="meetup.attending && !meetup.organizing"
+                @click="handleLeave"
+                >Отменить участие</secondary-button
+              >
+              <primary-button
+                v-if="meetup.organizing"
                 tag="router-link"
                 :to="{ name: 'meetup-edit', params: { meetup } }"
                 block
               >
                 Редактировать
               </primary-button>
-              <danger-button block>Удалить</danger-button>
+              <danger-button
+                block
+                v-if="meetup.organizing"
+                @click="handleDelete"
+                >Удалить</danger-button
+              >
             </div>
           </div>
         </div>
@@ -39,9 +56,11 @@
 <script>
 import ContentTabs from "../components/ui/ContentTabs";
 import DangerButton from "../components/ui/DangerButton.vue";
+import SecondaryButton from "../components/ui/SecondaryButton.vue";
 import MeetupCover from "../components/layouts/MeetupCover";
 import MeetupInfo from "../components/layouts/MeetupInfo";
 import PrimaryButton from "../components/ui/PrimaryButton";
+import store from "@/store/index.js";
 import { meetupsApi } from "@/api/meetupsApi";
 import { getMeetupCoverLink } from "../data";
 
@@ -53,7 +72,7 @@ export default {
     MeetupCover,
     MeetupInfo,
     PrimaryButton,
-
+    SecondaryButton,
     DangerButton,
   },
 
@@ -116,10 +135,47 @@ export default {
     meetupDate() {
       return new Date(this.meetup.date);
     },
+    isAuthenticated() {
+      return store.getters["auth/IS_AUTHENTICATED"];
+    },
   },
   methods: {
     setMeetup(meetup) {
       this.meetup = meetup;
+    },
+    async handleAttend() {
+      try {
+        await meetupsApi.attend(this.meetupId);
+        this.setMeetup({
+          ...this.meetup,
+          attending: true,
+        });
+        this.$toaster.success("Сохранено!");
+      } catch (error) {
+        this.$toaster.error(error);
+      }
+    },
+    async handleLeave() {
+      try {
+        await meetupsApi.leave(this.meetupId);
+
+        this.setMeetup({
+          ...this.meetup,
+          attending: false,
+        });
+        this.$toaster.success("Сохранено!");
+      } catch (error) {
+        this.$toaster.error(error);
+      }
+    },
+    async handleDelete() {
+      try {
+        await meetupsApi.deleteMeetup(this.meetupId);
+        this.$toaster.success("Сохранено!");
+        this.$router.push({ name: "index" });
+      } catch (error) {
+        this.$toaster.error(error);
+      }
     },
   },
 };

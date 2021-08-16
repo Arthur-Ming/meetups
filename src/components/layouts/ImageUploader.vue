@@ -71,12 +71,16 @@ export default {
 
     async uploadImage(e) {
       this.isLoading = true;
+      const [file] = e.target.files;
 
-      const { id: imageId } = await imagesApi.uploadImage(e.target.files["0"]);
-
-      this.$emit("change", imageId);
-
-      this.isLoading = false;
+      try {
+        const { id: imageId } = await imagesApi.uploadImage(file);
+        this.$emit("change", imageId);
+      } catch (error) {
+        this.$toaster.error(error.body.message);
+      } finally {
+        this.isLoading = false;
+      }
     },
   },
 };

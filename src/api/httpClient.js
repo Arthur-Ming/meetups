@@ -4,12 +4,19 @@ export const BASE_URL = process.env.VUE_APP_API_URL;
 
 export default {
 
-  get(url) {
-
-    return fetchJson(`${BASE_URL}${url}`);
+  get({
+    url = '',
+    payload = {},
+    toJson = true
+  }) {
+    return fetchJson(`${BASE_URL}${url}`, payload, toJson);
   },
 
-  post(url, meetup = {}) {
+  post({
+    url = '',
+    payload = {},
+    toJson = true
+  }) {
 
     return fetchJson(`${BASE_URL}${url}`, {
       method: "POST",
@@ -17,18 +24,16 @@ export default {
         "Content-Type": "application/json"
       },
 
-      body: JSON.stringify(meetup)
-    });
-  },
-  pos(url) {
-
-    return fetchJson(`${BASE_URL}${url}`, {
-      method: "POST",
-
-    });
+      body: JSON.stringify(payload),
+      /*   credentials: 'include' */
+    }, toJson);
   },
 
-  put(url, meetup = {}) {
+  put({
+    url = '',
+    payload = {},
+    toJson = true
+  }) {
 
     return fetchJson(`${BASE_URL}${url}`, {
       method: "PUT",
@@ -36,25 +41,27 @@ export default {
         "Content-Type": "application/json"
       },
 
-      body: JSON.stringify(meetup)
-    });
+      body: JSON.stringify(payload)
+    }, toJson);
   },
 
-  delete(url) {
+  delete({
+    url = '',
+    toJson = true }) {
     return fetchJson(`${BASE_URL}${url}`, {
       method: "DELETE",
-    });
+    }, toJson);
   },
 
-  imagePost(url, file) {
+  imagePost({
+    url = '',
+    payload = {},
+    toJson = true,
+  }) {
 
     return fetchJson(`${BASE_URL}${url}`, {
       method: "POST",
-      headers: {
-        "Content-Type": "multipart/form-data"
-      },
-
-      body: file
-    });
+      body: payload
+    }, toJson);
   }
 }

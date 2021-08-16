@@ -26,7 +26,9 @@
       <router-link :to="{ name: 'login' }" v-if="!isAuthenticated"
         >Вход</router-link
       >
-      <router-link :to="{ name: 'register' }">Регистрация</router-link>
+      <router-link :to="{ name: 'register' }" v-if="!isAuthenticated"
+        >Регистрация</router-link
+      >
       <router-link :to="{ name: 'meetups_create' }">Создать митап</router-link>
       <router-link
         :to="{ name: 'exit' }"

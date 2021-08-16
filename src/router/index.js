@@ -72,7 +72,7 @@ export const router = new VueRouter({
       children: [
         {
           path: 'description',
-          alias: 'description',
+          // alias: 'description',
           name: 'meetup.description',
           props: true,
           component: () => import('../views/MeetupDescriptionPage'),
@@ -114,7 +114,7 @@ export const router = new VueRouter({
       component: () => import('../views/FormEditPage'),
     },
     {
-      path: '#',
+      path: '/#',
       name: 'exit',
       //redirect: () => ({ name: 'login' }),
       component: () => import('../views/MeetupsPage'),

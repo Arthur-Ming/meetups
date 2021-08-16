@@ -20,17 +20,16 @@ const actions = {
    LOGIN({ commit }, { email, password }) {
       return authApi.login(email, password).then((user) => {
          commit('SET_USER', user);
-      })
+      }).catch((error) => {
+         throw error;
+      });
    },
 
    LOGOUT({ commit }) {
       return authApi.logout().then(() => {
          commit('SET_USER', null);
       }).catch((error) => {
-         if (error.message !== "Unexpected end of JSON input") throw error;
-         else {
-            commit('SET_USER', null);
-         }
+         throw error;
       });
    },
 }

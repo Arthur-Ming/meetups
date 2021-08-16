@@ -2,42 +2,53 @@
 // status >= 400 is an error
 // network error / json error are errors
 import Toaster from "@/plugins/ToasterPlugin/index.js";
+import store from "@/store/index.js";
 
 
-export default async function (url, params) {
+export default async function (url, params, toJson = true) {
   let response;
 
   try {
-    // NOTE: "toString" call needed for correct work of "jest-fetch-mock"
-    response = await fetch(url.toString(), params);
+    response = await fetch(url, { ...params, credentials: 'include' });
   } catch (err) {
-
     throw new FetchError(response, "Network error has occurred.");
   }
 
   let body;
 
   if (!response.ok) {
-    let errorText = response.statusText; // Not Found (for 404)
+
+    if (response.status === 401 && store.getters['auth/IS_AUTHENTICATED']) {      //Session invalidation
+
+      store.dispatch("auth/LOGOUT");
+    }
+
+    let errorText = response.statusText;
 
     try {
+
       body = await response.json();
 
       errorText = (body.error && body.error.message) || (body.data && body.data.error && body.data.error.message) || errorText;
-
 
     } catch (error) { /* ignore failed body */ }
 
     let message = `Error ${response.status}: ${errorText}`;
 
     throw new FetchError(response, body, message);
+
   }
 
-  try {
-    return await response.json();
-  } catch (err) {
-    throw new FetchError(response, null, err.message);
+  if (toJson) {
+    try {
+      return await response.json();
+    } catch (err) {
+      throw new FetchError(response, null, err.message);
+    }
   }
+
+  return response;
+
 }
 
 export class FetchError extends Error {
@@ -54,8 +65,6 @@ export class FetchError extends Error {
 window.addEventListener('unhandledrejection', event => {
   if (event.reason instanceof FetchError) {
     Toaster.error(event.reason.message)
-
-
   }
 });
 

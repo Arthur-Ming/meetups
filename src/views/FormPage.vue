@@ -40,9 +40,9 @@ export default {
   methods: {
     async handleSubmit(meetup) {
       try {
-        await withProgress(meetupsApi.createMeetup(meetup));
-        this.$toaster.success("!!!!");
-        this.meetup = meetup;
+        const { id } = await withProgress(meetupsApi.createMeetup(meetup));
+        this.$router.push({ name: "meetup", params: { meetupId: id } });
+        this.$toaster.success("Митап успешно создан!");
       } catch (error) {
         this.$toaster.error(error.body.message);
         throw error;

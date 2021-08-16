@@ -1,9 +1,22 @@
 import httpClient from '@/api/httpClient';
-export const API_URL = 'https://course-vue.javascript.ru/api'
+
 export default {
 
-  uploadImage(file) {
-    return httpClient.imagePost('/images/upload', file);
+  /*  uploadImage(imageFile) {
+     let formData = new FormData();
+     formData.append("file", imageFile);
+     return httpClient.imagePost('/images/upload', formData);
+   }, */
+
+  uploadImage(imageFile) {
+
+    const formData = new FormData();
+    formData.append("file", imageFile);
+
+    return httpClient.imagePost({
+      url: '/images/upload',
+      payload: formData
+    });
   },
 
 }

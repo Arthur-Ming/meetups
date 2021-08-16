@@ -57,7 +57,6 @@ export default {
       try {
         await withProgress(meetupsApi.updateMeetup(meetup));
         this.$toaster.success("Митап изменён!");
-        this.meetup = meetup;
       } catch (error) {
         this.$toaster.error(error.body.message);
         throw error;

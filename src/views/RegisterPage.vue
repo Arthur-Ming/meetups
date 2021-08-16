@@ -84,25 +84,17 @@ export default {
     async submitForm() {
       if (this.isFormValidated()) {
         try {
-          const res = await withProgress(
+          await withProgress(
             authApi.register(
               this.user.fullName,
               this.user.email,
               this.user.password
             )
           );
-
-          if (res.id !== undefined) {
-            alert(res.id);
-            this.$router.push("/login");
-          } else {
-            alert(res.message);
-          }
-
+          this.$router.push("/login");
           this.$toaster.success("Регистрация выполнена успешно!");
         } catch (error) {
           this.$toaster.error(error.body.message);
-
           throw error;
         }
       }
