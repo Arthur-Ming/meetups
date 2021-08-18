@@ -24,7 +24,10 @@
 
 <script>
 import AppIcon from "@/components/ui/AppIcon.vue";
-import { getAgendaItemIcons, getAgendaItemDefaultTitles } from "@/data.js";
+import {
+  getAgendaIconsMap,
+  getAgendaItemDefaultTitles,
+} from "@/services/MeetupService.js";
 
 export default {
   name: "MeetupAgendaItem",
@@ -39,7 +42,7 @@ export default {
   },
   computed: {
     icon() {
-      return getAgendaItemIcons()[this.agendaItem.type];
+      return getAgendaIconsMap()[this.agendaItem.type];
     },
     title() {
       return this.agendaItem.title
@@ -111,4 +114,3 @@ export default {
   }
 }
 </style>
-

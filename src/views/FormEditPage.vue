@@ -55,7 +55,8 @@ export default {
   methods: {
     async handleSubmit(meetup) {
       try {
-        await withProgress(meetupsApi.updateMeetup(meetup));
+        const { id } = await withProgress(meetupsApi.updateMeetup(meetup));
+        this.$router.push({ name: "meetup", params: { meetupId: id } });
         this.$toaster.success("Митап изменён!");
       } catch (error) {
         this.$toaster.error(error.body.message);

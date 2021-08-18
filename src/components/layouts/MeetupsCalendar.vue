@@ -11,10 +11,10 @@
 </template>
 
 <script>
-import CalendarView from './CalendarView';
+import CalendarView from "./CalendarView";
 
 export default {
-  name: 'MeetupsCalendar',
+  name: "MeetupsCalendar",
 
   components: {
     CalendarView,
@@ -30,7 +30,9 @@ export default {
   methods: {
     datesOfMeetups(year, month, day) {
       return this.meetups.filter(
-        (meetup) => new Date(meetup.date).setHours(0, 0, 0, 0) === new Date(year, month, day).setHours(0, 0, 0, 0),
+        (meetup) =>
+          new Date(meetup.date).setHours(0, 0, 0, 0) ===
+          new Date(year, month, day).setHours(0, 0, 0, 0)
       );
     },
   },

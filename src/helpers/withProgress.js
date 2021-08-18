@@ -1,10 +1,10 @@
-import TheTopProgressBar from '@/plugins/TopProgressBar';
+import TheTopProgressBar from "@/plugins/TopProgressBar";
 
 export async function withProgress(promise) {
   TheTopProgressBar.start();
 
   return promise
-    .catch(err => {
+    .catch((err) => {
       TheTopProgressBar.fail();
       throw err;
     })

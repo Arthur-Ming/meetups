@@ -4,12 +4,11 @@
 import Toaster from "@/plugins/ToasterPlugin/index.js";
 import store from "@/store/index.js";
 
-
 export default async function (url, params, toJson = true) {
   let response;
 
   try {
-    response = await fetch(url, { ...params, credentials: 'include' });
+    response = await fetch(url, { ...params, credentials: "include" });
   } catch (err) {
     throw new FetchError(response, "Network error has occurred.");
   }
@@ -17,26 +16,27 @@ export default async function (url, params, toJson = true) {
   let body;
 
   if (!response.ok) {
-
-    if (response.status === 401 && store.getters['auth/IS_AUTHENTICATED']) {      //Session invalidation
-
+    if (response.status === 401 && store.getters["auth/IS_AUTHENTICATED"]) {
+      //Session invalidation
       store.dispatch("auth/LOGOUT");
     }
 
     let errorText = response.statusText;
 
     try {
-
       body = await response.json();
 
-      errorText = (body.error && body.error.message) || (body.data && body.data.error && body.data.error.message) || errorText;
-
-    } catch (error) { /* ignore failed body */ }
+      errorText =
+        (body.error && body.error.message) ||
+        (body.data && body.data.error && body.data.error.message) ||
+        errorText;
+    } catch (error) {
+      /* ignore failed body */
+    }
 
     let message = `Error ${response.status}: ${errorText}`;
 
     throw new FetchError(response, body, message);
-
   }
 
   if (toJson) {
@@ -48,7 +48,6 @@ export default async function (url, params, toJson = true) {
   }
 
   return response;
-
 }
 
 export class FetchError extends Error {
@@ -62,9 +61,8 @@ export class FetchError extends Error {
 }
 
 // handle uncaught failed fetch through
-window.addEventListener('unhandledrejection', event => {
+window.addEventListener("unhandledrejection", (event) => {
   if (event.reason instanceof FetchError) {
-    Toaster.error(event.reason.message)
+    Toaster.error(event.reason.message);
   }
 });
-

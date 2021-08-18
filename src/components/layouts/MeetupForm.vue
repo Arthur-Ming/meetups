@@ -14,7 +14,6 @@
         <form-group label="Описание">
           <app-input v-model="localMeetup.description" multiline rows="3" />
         </form-group>
-
         <form-group label="Изображение">
           <div class="input-group">
             <image-uploader v-model="localMeetup.imageId" />
@@ -41,7 +40,7 @@
 
     <div class="meetup-form__aside">
       <div class="meetup-form__aside_stick">
-        <secondary-button @click="$emit('cancel')" block>
+        <secondary-button @click.prevent="$emit('cancel')" block>
           Отмена
         </secondary-button>
         <primary-button type="submit" block> {{ submitText }}</primary-button>
@@ -101,10 +100,6 @@ export default {
 
   data() {
     return {
-      /*  localMeetup: {
-        ..._.cloneDeep(this.meetup),
-        agenda: [createAgendaItem()],
-      }, */
       localMeetup: _.cloneDeep(this.meetup),
     };
   },
@@ -133,8 +128,8 @@ export default {
       this.localMeetup.agenda.splice(index, 1);
     },
 
-    updateAgendaItem(idx, newItem) {
-      this.localMeetup.agenda.splice(idx, 1, newItem);
+    updateAgendaItem(index, newItem) {
+      this.localMeetup.agenda.splice(index, 1, newItem);
     },
   },
 };

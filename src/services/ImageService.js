@@ -1,6 +1,5 @@
 /** URL адрес API */
-
-import { BASE_URL } from "@/api/httpClient"
+const BASE_URL = process.env.VUE_APP_API_URL;
 
 export const ImageService = {
   /**

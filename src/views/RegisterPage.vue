@@ -40,10 +40,10 @@
 </template>
 
 <script>
-import FormGroup from "../components/layouts/FormGroup";
-import AppInput from "../components/ui/AppInput";
-import AppCheckbox from "../components/ui/AppCheckbox";
-import PrimaryButton from "../components/ui/PrimaryButton";
+import FormGroup from "@/components/layouts/FormGroup";
+import AppInput from "@/components/ui/AppInput";
+import AppCheckbox from "@/components/ui/AppCheckbox";
+import PrimaryButton from "@/components/ui/PrimaryButton";
 import { authApi } from "@/api/authApi";
 import { withProgress } from "@/helpers/withProgress.js";
 

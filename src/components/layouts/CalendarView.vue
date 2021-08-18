@@ -1,6 +1,6 @@
 <template>
   <renderless-calendar
-    v-slot="{ calendar, currentDate, monthDown, monthUp }"
+    v-slot="{ calendar, currentDate, monthPrev, monthNext }"
     v-bind="$attrs"
   >
     <div class="rangepicker">
@@ -9,19 +9,19 @@
           <div class="rangepicker__selector-controls">
             <button
               class="rangepicker__selector-control-left"
-              @click="monthDown"
+              @click="monthPrev"
             ></button>
             <div>{{ currentDate }}</div>
             <button
               class="rangepicker__selector-control-right"
-              @click="monthUp"
+              @click="monthNext"
             ></button>
           </div>
         </div>
         <div class="rangepicker__date-grid">
           <div
-            v-for="(date, i) in calendar"
-            :key="i"
+            v-for="(date, index) in calendar"
+            :key="index"
             class="rangepicker__cell"
             :class="{ rangepicker__cell_inactive: date.isInactive }"
           >

@@ -87,10 +87,10 @@ export default {
       set(newVal) {
         this.localAgendaItem.startsAt = newVal;
 
-        let startsAtHH = +this.localAgendaItem.startsAt.split(":")[0];
-        let startsAtMM = this.localAgendaItem.startsAt.split(":")[1];
+        const startsAtHH = this.localAgendaItem.startsAt.split(":")[0];
+        const startsAtMM = this.localAgendaItem.startsAt.split(":")[1];
 
-        let endsAtHH = startsAtHH + this.durationOfAgenda;
+        let endsAtHH = Number(startsAtHH) + this.durationOfAgenda;
 
         if (endsAtHH > 23) endsAtHH = endsAtHH - 24;
 
@@ -129,8 +129,8 @@ export default {
 
   methods: {
     setDurationOfAgenda() {
-      let startsAtHH = +this.localAgendaItem.startsAt.split(":")[0];
-      let endsAtHH = +this.localAgendaItem.endsAt.split(":")[0];
+      let startsAtHH = Number(this.localAgendaItem.startsAt.split(":")[0]);
+      let endsAtHH = Number(this.localAgendaItem.endsAt.split(":")[0]);
 
       if (endsAtHH >= startsAtHH) {
         return endsAtHH - startsAtHH;

@@ -10,12 +10,11 @@
 </template>
 
 <script>
-import BaseLayout from "./components/layouts/BaseLayout";
+import BaseLayout from "@/components/layouts/BaseLayout";
 export default {
   name: "App",
   components: { BaseLayout },
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

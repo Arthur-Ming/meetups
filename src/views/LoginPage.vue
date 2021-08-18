@@ -32,9 +32,9 @@
 </template>
 
 <script>
-import FormGroup from "../components/layouts/FormGroup";
-import AppInput from "../components/ui/AppInput";
-import PrimaryButton from "../components/ui/PrimaryButton";
+import FormGroup from "@/components/layouts/FormGroup";
+import AppInput from "@/components/ui/AppInput";
+import PrimaryButton from "@/components/ui/PrimaryButton";
 import { withProgress } from "@/helpers/withProgress.js";
 import store from "@/store/index.js";
 
@@ -100,4 +100,3 @@ export default {
   margin: 0 auto;
 }
 </style>
-

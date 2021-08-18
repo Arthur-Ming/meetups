@@ -10,8 +10,8 @@
 </template>
 
 <script>
-import FormLayout from "../components/layouts/FormLayout";
-import MeetupForm from "../components/layouts/MeetupForm";
+import FormLayout from "@/components/layouts/FormLayout";
+import MeetupForm from "@/components/layouts/MeetupForm";
 import { meetupsApi } from "@/api/meetupsApi";
 import { withProgress } from "@/helpers/withProgress.js";
 export default {

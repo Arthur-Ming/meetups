@@ -1,12 +1,18 @@
 <template>
-  <component :is="tag" class="button" :class="{ button_block: block }" v-bind="$attrs" v-on="$listeners">
+  <component
+    :is="tag"
+    class="button"
+    :class="{ button_block: block }"
+    v-bind="$attrs"
+    v-on="$listeners"
+  >
     <slot />
   </component>
 </template>
 
 <script>
 export default {
-  name: 'BaseButton',
+  name: "BaseButton",
   inheritAttrs: false,
   props: {
     block: {
@@ -15,7 +21,7 @@ export default {
 
     tag: {
       type: String,
-      default: 'button',
+      default: "button",
     },
   },
 };

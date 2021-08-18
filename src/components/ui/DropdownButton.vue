@@ -78,7 +78,7 @@ export default {
 };
 </script>
 
-<style  scoped>
+<style scoped>
 .button {
   display: inline-block;
   padding: 10px 24px;

@@ -9,8 +9,8 @@
 
 <script>
 export default {
-  name: 'AuthLayout',
-  props: ['title'],
+  name: "AuthLayout",
+  props: ["title"],
 };
 </script>
 

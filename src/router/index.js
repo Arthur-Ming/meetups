@@ -1,17 +1,18 @@
-import Vue from 'vue';
-import VueRouter from 'vue-router';
+import Vue from "vue";
+import VueRouter from "vue-router";
 import store from "@/store/index.js";
 
 Vue.use(VueRouter);
 
 function scrollBehavior(to, from, savedPosition) {
-
   if (savedPosition) {
     return savedPosition;
   }
 
-  if (to.matched.some((m) => m.meta.saveScrollPosition) && from.matched.some((m) => m.meta.saveScrollPosition)) {
-
+  if (
+    to.matched.some((m) => m.meta.saveScrollPosition) &&
+    from.matched.some((m) => m.meta.saveScrollPosition)
+  ) {
     return false;
   }
 
@@ -24,19 +25,13 @@ function scrollBehavior(to, from, savedPosition) {
 }
 
 function requireAuthGuard(to, from, next) {
-  // Если переходим на маршрут, содержащим requireAuth
   if (to.matched.some((route) => route.meta.requireAuth)) {
-    // Делаем проверку
-    if (store.getters['auth/IS_AUTHENTICATED']) {
-      // или if (store.state.auth.isAuthenticated)
-      // Переходим
+    if (store.getters["auth/IS_AUTHENTICATED"]) {
       next();
     } else {
-      // Нет, сюда нельзя, отменяем переход
-      next({ name: 'login' });
+      next({ name: "login" });
     }
   } else {
-    // авторизация не требуется, делаем переход, как обычно
     next();
   }
 }
@@ -44,65 +39,64 @@ function requireAuthGuard(to, from, next) {
 Vue.use(VueRouter);
 
 export const router = new VueRouter({
-  mode: 'history',
+  mode: "history",
   base: process.env.BASE_URL,
 
   scrollBehavior,
   routes: [
     {
-      path: '/',
-      name: 'index',
-      component: () => import('../views/MeetupsPage'),
+      path: "/",
+      name: "index",
+      component: () => import("../views/MeetupsPage"),
     },
     {
-      path: '/meetups',
-      name: 'meetups',
-      component: () => import('../views/MeetupsPage'),
+      path: "/meetups",
+      name: "meetups",
+      component: () => import("../views/MeetupsPage"),
     },
     {
-      path: '/meetups/:meetupId(\\d+)',
-      name: 'meetup',
+      path: "/meetups/:meetupId(\\d+)",
+      name: "meetup",
       props: true,
-      redirect: (to) => ({ name: 'meetup.description', params: to.params }),
+      redirect: (to) => ({ name: "meetup.description", params: to.params }),
       meta: {
         showReturnToMeetups: true,
         saveScrollPosition: true,
       },
-      component: () => import('../views/MeetupPage'),
+      component: () => import("../views/MeetupPage"),
       children: [
         {
-          path: 'description',
-          // alias: 'description',
-          name: 'meetup.description',
+          path: "description",
+          name: "meetup.description",
           props: true,
-          component: () => import('../views/MeetupDescriptionPage'),
+          component: () => import("../views/MeetupDescriptionPage"),
         },
         {
-          path: 'agenda',
-          name: 'meetup.agenda',
+          path: "agenda",
+          name: "meetup.agenda",
           props: true,
-          component: () => import('../views/MeetupAgendaPage'),
+          component: () => import("../views/MeetupAgendaPage"),
         },
       ],
     },
     {
-      path: '/register',
-      name: 'register',
-      component: () => import('../views/RegisterPage'),
+      path: "/register",
+      name: "register",
+      component: () => import("../views/RegisterPage"),
     },
 
     {
-      path: '/login',
-      name: 'login',
-      component: () => import('../views/LoginPage'),
+      path: "/login",
+      name: "login",
+      component: () => import("../views/LoginPage"),
     },
     {
-      path: '/meetups/create',
-      name: 'meetups_create',
+      path: "/meetups/create",
+      name: "meetups_create",
       meta: {
         requireAuth: true,
       },
-      component: () => import('../views/FormPage'),
+      component: () => import("../views/FormPage"),
     },
     {
       path: "/meetups/:meetupId(\\d+)/edit",
@@ -111,20 +105,18 @@ export const router = new VueRouter({
         requireAuth: true,
       },
       props: true,
-      component: () => import('../views/FormEditPage'),
+      component: () => import("../views/FormEditPage"),
     },
     {
-      path: '/#',
-      name: 'exit',
-      //redirect: () => ({ name: 'login' }),
-      component: () => import('../views/MeetupsPage'),
+      path: "/#",
+      name: "exit",
+      component: () => import("../views/MeetupsPage"),
     },
     {
-      path: '*',
+      path: "*",
       name: "notFoundPage",
-      component: () => import('../views/NotFoundPage')
-    }
-
+      component: () => import("../views/NotFoundPage"),
+    },
   ],
 });
 

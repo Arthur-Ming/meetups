@@ -1,6 +1,6 @@
 <script>
 export default {
-  name: 'RenderlessCalendar',
+  name: "RenderlessCalendar",
 
   props: {
     customDate: {
@@ -20,8 +20,8 @@ export default {
   computed: {
     currentDate() {
       return this.date.toLocaleDateString(navigator.language, {
-        year: 'numeric',
-        month: 'long',
+        year: "numeric",
+        month: "long",
       });
     },
 
@@ -46,7 +46,8 @@ export default {
 
     daysBefore() {
       const end = this.getLastDayOfMonth(this.year, this.currentMonth - 1);
-      const start = end - (new Date(this.year, this.currentMonth, 1).getDay() || 7) + 1;
+      const start =
+        end - (new Date(this.year, this.currentMonth, 1).getDay() || 7) + 1;
 
       return this.initCalendar(start, end, this.currentMonth - 1, true);
     },
@@ -61,16 +62,16 @@ export default {
   },
 
   methods: {
-    monthUp() {
+    monthNext() {
       this.date = new Date(this.date.setMonth(this.currentMonth + 1, 15));
     },
 
-    monthDown() {
+    monthPrev() {
       this.date = new Date(this.date.setMonth(this.currentMonth - 1, 15));
     },
 
     getLastDayOfMonth(year, month) {
-      let date = new Date(year, month + 1, 0);
+      const date = new Date(year, month + 1, 0);
       return date.getDate();
     },
 
@@ -78,7 +79,8 @@ export default {
       return Array.from(Array(end - start), (item, index) => ({
         day: start + index + 1,
         month: month < 0 ? 11 : month > 11 ? 0 : month,
-        year: month < 0 ? this.year - 1 : month > 11 ? this.year + 1 : this.year,
+        year:
+          month < 0 ? this.year - 1 : month > 11 ? this.year + 1 : this.year,
         isInactive: isInactive,
       }));
     },
@@ -88,10 +90,10 @@ export default {
     const slotProps = {
       calendar: this.calendar,
       currentDate: this.currentDate,
-      monthDown: this.monthDown,
-      monthUp: this.monthUp,
+      monthPrev: this.monthPrev,
+      monthNext: this.monthNext,
     };
-    return h('div', this.$scopedSlots.default(slotProps));
+    return h("div", this.$scopedSlots.default(slotProps));
   },
 };
 </script>

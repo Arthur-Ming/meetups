@@ -40,17 +40,16 @@
 </template>
 
 <script>
-//import { fetchMeetups } from "../data";
-import { meetupsApi } from "../api/meetupsApi";
-//import { withProgress } from "@/helpers/withProgress.js";
-import MeetupsList from "../components/layouts/MeetupsList";
-import MeetupsCalendar from "../components/layouts/MeetupsCalendar";
-import PageTabs from "../components/ui/PageTabs";
-import FormCheck from "../components/ui/FormCheck";
-import FormGroup from "../components/layouts/FormGroup";
-import AppEmpty from "../components/layouts/AppEmpty";
-import AppInput from "../components/ui/AppInput";
-import AppIcon from "../components/ui/AppIcon";
+import { meetupsApi } from "@/api/meetupsApi";
+import { ImageService } from "@/services/ImageService.js";
+import MeetupsList from "@/components/layouts/MeetupsList";
+import MeetupsCalendar from "@/components/layouts/MeetupsCalendar";
+import PageTabs from "@/components/ui/PageTabs";
+import FormCheck from "@/components/ui/FormCheck";
+import FormGroup from "@/components/layouts/FormGroup";
+import AppEmpty from "@/components/layouts/AppEmpty";
+import AppInput from "@/components/ui/AppInput";
+import AppIcon from "@/components/ui/AppIcon";
 
 export default {
   name: "MeetupsPage",
@@ -83,6 +82,18 @@ export default {
     return {
       title: "Митапы",
     };
+  },
+  beforeRouteEnter(to, from, next) {
+    meetupsApi
+      .fetchMeetups()
+      .then((meetups) => {
+        next((vm) => {
+          vm.setMeetups(meetups);
+        });
+      })
+      .catch(() => {
+        next("notFoundPage");
+      });
   },
   watch: {
     params: {
@@ -126,11 +137,11 @@ export default {
       return this.rawMeetups.map((meetup) => ({
         ...meetup,
         cover: meetup.imageId
-          ? `https://course-vue.javascript.ru/api/images/${meetup.imageId}`
+          ? ImageService.getImageURL(meetup.imageId)
           : undefined,
         coverStyle: meetup.imageId
           ? {
-              "--bg-url": `url('https://course-vue.javascript.ru/api/images/${meetup.imageId}')`,
+              "--bg-url": `url('${ImageService.getImageURL(meetup.imageId)}')`,
             }
           : {},
         date: new Date(meetup.date),
@@ -178,19 +189,6 @@ export default {
     setMeetups(meetup) {
       this.rawMeetups = meetup;
     },
-  },
-
-  beforeRouteEnter(to, from, next) {
-    meetupsApi
-      .fetchMeetups()
-      .then((meetups) => {
-        next((vm) => {
-          vm.setMeetups(meetups);
-        });
-      })
-      .catch(() => {
-        next("notFoundPage");
-      });
   },
 };
 </script>

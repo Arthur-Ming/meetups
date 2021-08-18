@@ -1,10 +1,9 @@
 import httpClient from "./httpClient";
 
 export const authApi = {
-
   fetchUser() {
     return httpClient.get({
-      url: '/auth/user'
+      url: "/auth/user",
     });
   },
 
@@ -14,25 +13,25 @@ export const authApi = {
       payload: {
         email,
         password,
-      }
+      },
     });
   },
 
   register(fullname, email, password) {
     return httpClient.post({
-      url: '/auth/register',
+      url: "/auth/register",
       payload: {
         fullname,
         email,
         password,
-      }
+      },
     });
   },
 
   logout() {
     return httpClient.post({
-      url: '/auth/logout',
-      toJson: false
+      url: "/auth/logout",
+      toJson: false,
     });
   },
 };

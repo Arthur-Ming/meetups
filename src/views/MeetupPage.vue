@@ -54,15 +54,15 @@
 </template>
 
 <script>
-import ContentTabs from "../components/ui/ContentTabs";
-import DangerButton from "../components/ui/DangerButton.vue";
-import SecondaryButton from "../components/ui/SecondaryButton.vue";
-import MeetupCover from "../components/layouts/MeetupCover";
-import MeetupInfo from "../components/layouts/MeetupInfo";
-import PrimaryButton from "../components/ui/PrimaryButton";
+import ContentTabs from "@/components/ui/ContentTabs";
+import DangerButton from "@/components/ui/DangerButton.vue";
+import SecondaryButton from "@/components/ui/SecondaryButton.vue";
+import MeetupCover from "@/components/layouts/MeetupCover";
+import MeetupInfo from "@/components/layouts/MeetupInfo";
+import PrimaryButton from "@/components/ui/PrimaryButton";
 import store from "@/store/index.js";
 import { meetupsApi } from "@/api/meetupsApi";
-import { getMeetupCoverLink } from "../data";
+import { ImageService } from "@/services/ImageService.js";
 
 export default {
   name: "MeetupPage",
@@ -76,6 +76,26 @@ export default {
     DangerButton,
   },
 
+  props: {
+    meetupId: {
+      required: true,
+    },
+  },
+
+  data() {
+    return {
+      meetup: null,
+      tabs: [
+        { to: { name: "meetup.description" }, text: "Описание" },
+        { to: { name: "meetup.agenda" }, text: "Программа" },
+      ],
+    };
+  },
+  metaInfo() {
+    return {
+      title: this.meetup && this.meetup.title,
+    };
+  },
   async beforeRouteEnter(to, from, next) {
     try {
       const meetup = await meetupsApi.fetchMeetup(to.params.meetupId);
@@ -106,31 +126,11 @@ export default {
       }
     }
   },
-
-  props: {
-    meetupId: {
-      required: true,
-    },
-  },
-
-  data() {
-    return {
-      meetup: null,
-      tabs: [
-        { to: { name: "meetup.description" }, text: "Описание" },
-        { to: { name: "meetup.agenda" }, text: "Программа" },
-      ],
-    };
-  },
-  metaInfo() {
-    return {
-      //title: this.meetup?.title,
-      title: this.meetup && this.meetup.title,
-    };
-  },
   computed: {
     meetupImagelink() {
-      return this.meetup.imageId ? getMeetupCoverLink(this.meetup) : null;
+      return this.meetup.imageId
+        ? ImageService.getImageURL(this.meetup.imageId)
+        : null;
     },
     meetupDate() {
       return new Date(this.meetup.date);

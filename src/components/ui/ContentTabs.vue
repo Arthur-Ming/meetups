@@ -18,7 +18,7 @@
 
 <script>
 export default {
-  name: 'ContentTabs',
+  name: "ContentTabs",
 
   props: {
     tabs: {
@@ -44,7 +44,7 @@ export default {
 }
 
 .content-tabs__nav:before {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   bottom: 0;

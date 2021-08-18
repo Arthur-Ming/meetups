@@ -1,18 +1,16 @@
 import TheTopProgressBar from "./TheTopProgressBar";
-import TopProgressBar from './index';
+import TopProgressBar from "./index";
 
 export default {
-
   install(Vue, options = {}) {
     let { container } = options;
     if (!container) {
-      container = document.createElement('div');
+      container = document.createElement("div");
       document.body.appendChild(container);
     }
 
     TopProgressBar.setInstance(new Vue(TheTopProgressBar).$mount(container));
     Vue.prototype.$progress = TopProgressBar;
-
 
     Vue.$progress = TopProgressBar;
 
@@ -27,10 +25,9 @@ export default {
       });
 
       options.router.onError((err) => {
-
         TopProgressBar.fail();
         throw err;
       });
     }
-  }
-}
+  },
+};

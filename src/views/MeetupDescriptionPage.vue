@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import MeetupDescription from "../components/layouts/MeetupDescription";
+import MeetupDescription from "@/components/layouts/MeetupDescription";
 export default {
   name: "MeetupDescriptionPage",
 

@@ -7,7 +7,6 @@
       @click="removeImage($event)"
     >
       <span>{{ title }}</span>
-
       <input
         ref="input"
         type="file"
@@ -20,8 +19,8 @@
 </template>
 
 <script>
-import { ImageService } from "@/services/ImageService";
 import imagesApi from "@/api/imagesApi";
+import { ImageService } from "@/services/ImageService.js";
 const LOADING_TEXT = "Загрузка...";
 const EMPTY_TEXT = "Загрузить изображение";
 const DELETE_TEXT = "Удалить изображение";
@@ -76,6 +75,7 @@ export default {
       try {
         const { id: imageId } = await imagesApi.uploadImage(file);
         this.$emit("change", imageId);
+        this.$toaster.success("Изображение загружено!");
       } catch (error) {
         this.$toaster.error(error.body.message);
       } finally {

@@ -5,9 +5,9 @@
 </template>
 
 <script>
-import BaseButton from './BaseButton';
+import BaseButton from "./BaseButton";
 export default {
-  name: 'PrimaryButton',
+  name: "PrimaryButton",
   components: { BaseButton },
   inheritAttrs: false,
 };

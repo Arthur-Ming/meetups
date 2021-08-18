@@ -1,4 +1,4 @@
-import TheToaster from './TheToaster';
+import TheToaster from "./TheToaster";
 
 export default {
   instance: null,

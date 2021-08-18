@@ -1,6 +1,10 @@
 <template>
   <div class="form-check">
-    <div v-for="option in options" :key="option.value" class="form-check__group">
+    <div
+      v-for="option in options"
+      :key="option.value"
+      class="form-check__group"
+    >
       <input
         class="form-check__input"
         type="radio"
@@ -16,11 +20,11 @@
 
 <script>
 export default {
-  name: 'FormCheck',
+  name: "FormCheck",
 
   model: {
-    prop: 'selected',
-    event: 'change',
+    prop: "selected",
+    event: "change",
   },
 
   props: {

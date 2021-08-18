@@ -1,6 +1,12 @@
 <template>
   <label class="checkbox">
-    <input v-model="checkedValue" type="checkbox" :value="value" v-bind="$attrs" v-on="listeners" />
+    <input
+      v-model="checkedValue"
+      type="checkbox"
+      :value="value"
+      v-bind="$attrs"
+      v-on="listeners"
+    />
     <slot />
     <span></span>
   </label>
@@ -8,12 +14,12 @@
 
 <script>
 export default {
-  name: 'AppCheckbox',
+  name: "AppCheckbox",
   inheritAttrs: false,
 
   model: {
-    prop: 'checked',
-    event: 'change',
+    prop: "checked",
+    event: "change",
   },
 
   props: {
@@ -28,7 +34,7 @@ export default {
       },
 
       set(value) {
-        this.$emit('change', value);
+        this.$emit("change", value);
       },
     },
 
@@ -85,14 +91,14 @@ export default {
 }
 
 .checkbox > span:after {
-  content: '';
+  content: "";
   position: absolute;
   display: none;
   top: 50%;
   left: 50%;
   width: 14px;
   height: 13px;
-  background-image: url('~@/assets/icons/icon-check.svg');
+  background-image: url("~@/assets/icons/icon-check.svg");
   border: none;
   transform: translate(-50%, -50%);
 }
