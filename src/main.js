@@ -1,7 +1,6 @@
 import Vue from "vue";
 import App from "./App.vue";
 import "@/assets/styles/app.css";
-import "@/assets/styles/index.css";
 import { router } from "./router";
 import VueMeta from "vue-meta";
 import ToasterPlugin from "@/plugins/ToasterPlugin/plugin.js";
@@ -19,7 +18,7 @@ authApi
   .then((user) => {
     store.commit("auth/SET_USER", user);
   })
-  .catch(() => {})
+  .catch(() => { })
   .finally(() => {
     new Vue({
       router,
