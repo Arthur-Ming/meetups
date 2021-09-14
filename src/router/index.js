@@ -112,11 +112,7 @@ export const router = new VueRouter({
       name: "exit",
       component: () => import("../views/MeetupsPage"),
     },
-    {
-      path: "*",
-      name: "notFoundPage",
-      component: () => import("../views/NotFoundPage"),
-    },
+
   ],
 });
 
